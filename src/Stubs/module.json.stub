@@ -1,0 +1,12 @@
+{
+    "name": "DumpMyModuleName",
+    "alias": "DumpMyModuleName",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DumpMyModuleName\\Providers\\DumpMyModuleNameServiceProvider"
+        ,"Modules\\DumpMyModuleName\\Providers\\PermissionServiceProvider"
+    ],
+    "files": []
+}

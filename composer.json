@@ -1,0 +1,39 @@
+{
+    "name": "hungnm28/livewire-admin",
+    "description": "This package used for create laravel admin with livewire and laravel module.",
+    "type": "library",
+    "require": {
+        "doctrine/dbal": ">=2.3.0",
+        "nwidart/laravel-modules": ">=10.0.0",
+        "mhmiton/laravel-modules-livewire": ">=1.6.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Hungnm28\\LivewireAdmin\\": "src/"
+        },
+        "files": ["src/Helpers/functions.php"]
+    },
+    "authors": [
+        {
+            "name": "HungNM28",
+            "email": "nguyenmanhhung28@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Hungnm28\\LivewireAdmin\\LivewireAdminServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-package-install": [
+            "@php artisan vendor:publish --tag=livewire-admin"
+        ],
+        "post-package-update": [
+            "@php artisan vendor:publish --tag=livewire-admin"
+        ]
+    },
+    "minimum-stability": "dev"
+}
