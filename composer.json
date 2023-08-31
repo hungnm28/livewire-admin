@@ -5,14 +5,14 @@
     "require": {
         "doctrine/dbal": ">=2.3.0",
         "nwidart/laravel-modules": ">=10.0.0",
-        "mhmiton/laravel-modules-livewire": ">=1.6.0"
+        "mhmiton/laravel-modules-livewire": ">=1.6.0",
+        "laravel/prompts": ">=v0.1.5"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Hungnm28\\LivewireAdmin\\": "src/"
-        },
-        "files": ["src/Helpers/functions.php"]
+        }
     },
     "authors": [
         {

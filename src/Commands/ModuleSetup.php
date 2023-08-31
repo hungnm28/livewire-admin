@@ -17,6 +17,7 @@ class ModuleSetup extends Command
 
     public function handle()
     {
+        $this->info("Setup");
         $moduleName = $this->argument("name");
         $this->initModule($moduleName);
 
@@ -53,7 +54,6 @@ class ModuleSetup extends Command
     private function updateProvider()
     {
         $moduleName = $this->module->getName();
-        $this->info("Update $moduleName" . "ServiceProvider");
         $pathFile = module_path($moduleName, "Providers/" . $moduleName . "ServiceProvider.php");
         if (Str::contains(file_get_contents($pathFile), "Blade::componentNamespace")) {
             $confirm = $this->confirm("ServicePorivider already updated before, do you want replace it?", false);

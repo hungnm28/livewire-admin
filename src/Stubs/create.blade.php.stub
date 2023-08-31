@@ -1,0 +1,11 @@
+<x-lf.header>DumpMyPageName Create</x-lf.header>
+<x-lf.form>
+    <x-lf.form.content>
+        DumpMyFields
+    </x-lf.form.content>
+    <x-lf.form.footer>
+        <label class="btn" wire:click="store">Create</label>
+        <a class="btn-default" href="{{route("DumpMyRoute")}}">Cancel</a>
+    </x-lf.form.footer>
+</x-lf.form>
+

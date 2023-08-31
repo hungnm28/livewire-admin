@@ -22,9 +22,11 @@ class MakeModule extends Command
         if (!$check) {
             $this->info("Make new Module: $moduleName");
             $this->call("module:make", ["name" => [$moduleName]]);
+            $this->call("la:module-setup",["name"=>$moduleName]);
         } else {
             $this->error("Module exits: $moduleName");
         }
+
         return Command::SUCCESS;
     }
 }

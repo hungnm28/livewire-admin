@@ -1,0 +1,21 @@
+<?php
+
+namespace DumpMyNamespace;
+
+trait FormTrait
+{
+    public DumpMyListFields;
+    protected function rules()
+    {
+        $rules = [
+            DumpMyRules
+        ];
+        return $rules;
+    }
+
+    private function getField(){
+        return [
+          DumpMyFormFields
+        ];
+    }
+}

@@ -1,0 +1,29 @@
+<?php
+
+namespace DumpMyNamespace;
+
+use DumpMyModelNamespace;
+use Hungnm28\LivewireAdmin\Traits\WithLivewireFormTrait;
+use Livewire\Component;
+
+class Create extends Component
+{
+    use WithLivewireFormTrait;
+    use FormTrait;
+
+    public function store()
+    {
+        $this->authorize("DumpMyPermission.create");
+        $this->validate();
+        $data = DumpMyModelClassName::create($this->getField());
+        if ($data) {
+            $this->redirectForm('DumpMyRoute', $data->id);
+        }
+    }
+
+    public function render()
+    {
+        return view("DumpMyModuleSlug::livewire.DumpMyView.DumpMyFileSlug")
+            ->layout('admin::layouts.master', ['title' => 'DumpMyPageName Create']);
+    }
+}

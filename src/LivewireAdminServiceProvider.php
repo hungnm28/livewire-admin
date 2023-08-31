@@ -8,7 +8,11 @@ class LivewireAdminServiceProvider extends ServiceProvider
 {
     protected $commands = [
             Commands\MakeModule::class
+            ,Commands\ModuleLayout::class
             ,Commands\ModuleSetup::class
+            ,Commands\ModelCommand::class
+            ,Commands\MakeFormTrait::class
+            ,Commands\MakeCreate::class
         ];
     public function register()
     {
