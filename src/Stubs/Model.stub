@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+DUMP_MY_CAST_CLASSES
+
+class DUMP_MY_CLASS_NAME extends Model
+{
+    use HasFactory;
+
+    protected $table = 'DUMP_MY_TABLE';
+
+    protected $fillable = [DUMP_MY_FIELDS];
+
+    public static $listFields = ["id", "created_at", "updated_at", DUMP_MY_FIELDS];
+
+    protected $casts = [
+        DUMP_MY_CASTS
+    ];
+}

@@ -1,0 +1,72 @@
+<x-lf.page.listing title="DUMP_MY_PAGE_NAME">
+    <x-lf.filter>
+        <x-lf.form.input name="fId" class="sm w-1/3" placeholder="id..." autocomplete="off" autofill="off"/>
+    </x-lf.filter>
+    <x-lf.table>
+        <tr>
+            <th class="stt">#</th>
+            DUMP_MY_TABLE_LABELS
+            <th class="action">
+                <x-lf.table.fields :fields="$fields"/>
+            </th>
+        </tr>
+        @foreach($data as $item)
+            <tr>
+                <th class="stt">{{$item->id}}</th>
+                DUMP_MY_TABLE_ITEMS
+                <td class="action">
+                    @can('DUMP_MY_SHOW_PERMISSION')
+                        <span class="btn-info xs" title="info" wire:click="modalShow({{$item->id}})">{!! lfIcon("launch",10) !!}</span>
+                    @endcan
+                    @can('DUMP_MY_EDIT_PERMISSION')
+                        <span class="btn-primary xs" wire:click="modalEdit({{$item->id}})" title="Edit">{!! lfIcon("edit",10) !!}</span>
+                    @endcan
+                    @can('DUMP_MY_DELETE_PERMISSION')
+                        <span class="btn-warning xs" wire:click="modalDelete({{$item->id}})" title="Delete">{!! lfIcon("delete",10) !!}</span>
+                    @endcan
+                </td>
+            </tr>
+        @endforeach
+    </x-lf.table>
+    @can('DUMP_MY_SHOW_PERMISSION')
+        @if($show && $record_id>0)
+            <x-lf.modal class="sm:max-w-2xl" wire:model="show">
+                <livewire:DUMP_MY_MODULE_SLUG::DUMP_MY_DOT_PAGE.show :record_id="$record_id" :key="'show-' . $record_id"/>
+            </x-lf.modal>
+        @endif
+    @endcan
+
+    @can('DUMP_MY_EDIT_PERMISSION')
+        @if($edit && $record_id>0)
+            <x-lf.modal class="sm:max-w-2xl" wire:model="edit">
+                <livewire:DUMP_MY_MODULE_SLUG::DUMP_MY_DOT_PAGE.edit :record_id="$record_id" :key="'edit-' . $record_id"/>
+            </x-lf.modal>
+        @endif
+    @endcan
+
+    @can('DUMP_MY_DELETE_PERMISSION')
+        @if($delete && $record_id >0)
+            <x-lf.modal class="sm:max-w-sm" wire:model="delete">
+                <x-lf.box.delete title="DUMP_MY_PAGE_NAME - Delete"/>
+            </x-lf.modal>
+        @endif
+    @endcan
+
+    @can('DUMP_MY_CREATE_PERMISSION')
+        @if($create)
+            <x-lf.modal class="sm:max-w-2xl" wire:model="create">
+                <livewire:DUMP_MY_MODULE_SLUG::DUMP_MY_DOT_PAGE.create key="create"/>
+            </x-lf.modal>
+        @endif
+    @endcan
+
+    <x-slot:footer>
+        <span><label class="btn" wire:click="modalCreate">Create</label></span>
+        {{$data->links()}}
+    </x-slot:footer>
+    <x-slot:tools>
+        @can('DUMP_MY_CREATE_PERMISSION')
+            <span class="h-btn" title="Add" wire:click="modalCreate">{!! lfIcon("add") !!}</span>
+        @endcan
+    </x-slot:tools>
+</x-lf.page.listing>

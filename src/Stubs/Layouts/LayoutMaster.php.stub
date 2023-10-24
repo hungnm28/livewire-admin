@@ -1,0 +1,24 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Views\Components;
+
+use Illuminate\View\Component;
+
+class LayoutMaster extends Component
+{
+    /**
+     * Get the view / contents that represents the component.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function __construct(public $title = 'DUMP_MY_MODULE_NAME')
+    {
+
+    }
+
+    public function render()
+    {
+
+        return view('DUMP_MY_MODULE_SLUG::layouts.master');
+    }
+}

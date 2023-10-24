@@ -1,0 +1,9 @@
+.box-filter{
+ @apply w-full flex bg-gray-100;
+    .filter-content{
+        @apply w-full flex-auto flex flex-wrap;
+    }
+    .icon{
+        @apply text-gray-600 w-8 flex justify-center pt-4;
+    }
+}

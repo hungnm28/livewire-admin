@@ -1,0 +1,30 @@
+.tree-list{
+    @apply w-full block pl-4 text-sm;
+    &.tree-0{
+        @apply pr-2;
+    }
+    .item{
+        @apply w-full block;
+        .item-content{
+            @apply w-full flex bg-slate-100 border my-1 items-center;
+            .tools{
+                @apply flex-none float-right flex justify-end items-center space-y-1 px-1 pr-2;
+            }
+            .icon{
+                @apply w-8 h-8 flex items-center justify-center;
+            }
+            .field{
+                @apply flex-auto p-1 border-l;
+                .label{
+                    @apply text-xs font-bold block text-gray-600 ;
+                }
+                .value{
+                    @apply w-full block;
+                }
+            }
+            &.error{
+                @apply bg-orange-100 text-orange-600;
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<div id="la-page-menu">
+    <div class="logo">
+        <a href="{{route('DUMP_MY_MODULE_SLUG')}}">
+            <span class="logo-small">DUMP_MY_SMALL_LOGO</span><span class="logo-full">DUMP_MY_MODULE_HEAD_NAME</span>
+        </a>
+    </div>
+    <ul class="menu">
+        @if(Route::has("DUMP_MY_MODULE_SLUG"))
+            @can('admin')
+                <li class="item {{ (request()->routeIs("DUMP_MY_MODULE_SLUG") )? 'active' : '' }}">
+                    <a class="link" href="{{route('DUMP_MY_MODULE_SLUG')}}">
+                        <span class="icon">{!! lfIcon('dashboard') !!}</span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+            @endcan
+        @endif
+    </ul>
+    <x-DUMP_MY_MODULE_SLUG::menu.categories />
+    <ul class="menu">
+        <!-- END-OF-MENU -->
+    </ul>
+
+</div>

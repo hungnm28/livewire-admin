@@ -1,0 +1,52 @@
+header{
+    @apply w-full flex h-12 border-[var(--c500)] bg-white border-b shadow text-gray-600 items-center;
+    .h-menu{
+        @apply w-12 h-full flex items-center justify-center flex-none hover:bg-black hover:bg-opacity-5 cursor-pointer border-r;
+        .mcon{
+            @apply w-6 h-6;
+        }
+    }
+    .title{
+        @apply px-2 font-medium text-xl inline-flex;
+    }
+    .h-btn{
+        @apply w-12 h-full flex items-center justify-center cursor-pointer hover:bg-gray-100 border-l-gray-100 border-l;
+        &.active{
+            @apply bg-gray-100;
+        }
+        .mcon{
+            @apply w-6 h-6;
+        }
+    }
+    .tools{
+        @apply h-full flex;
+    }
+
+}
+
+.h-user{
+    @apply w-12 h-full relative;
+
+    .box-user{
+        @apply absolute bg-white right-0 mt-0 rounded-b-lg shadow-lg border-l border-r border-b z-40;
+        .user{
+            @apply min-w-[320px] min-h-[100px] flex p-4 flex-col items-center justify-center  bg-slate-700;
+            .icon{
+                @apply mt-5 rounded-full border p-3 bg-white;
+            }
+            .name{
+                @apply font-bold text-xl whitespace-nowrap my-2 block text-white;
+            }
+        }
+        .footer{
+            @apply  w-full p-4 flex border-t justify-between bg-white;
+        }
+    }
+    &:hover{
+        .h-btn{
+            @apply bg-gray-100;
+        }
+
+    }
+}
+

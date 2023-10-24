@@ -1,0 +1,39 @@
+<?php
+
+namespace DUMP_MY_NAMESPACE;
+
+use App\Models\DUMP_MY_MODEL_NAME;
+use Livewire\Component;
+
+class Edit extends Component
+{
+    use FormTrait;
+
+    public function mount()
+    {
+        $this->authorize("DUMP_MY_EDIT_PERMISSION");
+        $this->setFields();
+    }
+
+    public function store()
+    {
+        $this->authorize("DUMP_MY_EDIT_PERMISSION");
+        $this->validate();
+        $data = DUMP_MY_MODEL_NAME::findOrFail($this->record_id);
+        $data->fill($this->getFieldDatas());
+        if (!$data->clean) {
+            $data->update();
+            if ($data->parent_id > 0) {
+                $data->children()->delete();
+            }
+            $this->pushNotification("success", "Updated successful!");
+        }
+        $this->dispatch("resetModal");
+    }
+
+    public function render()
+    {
+
+        return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.edit');
+    }
+}

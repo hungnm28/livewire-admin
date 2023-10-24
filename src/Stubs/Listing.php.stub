@@ -1,0 +1,48 @@
+<?php
+
+namespace DUMP_MY_NAMESPACE;
+
+use App\Models\DUMP_MY_MODEL_NAME;
+use Hungnm28\LivewireAdmin\Traits\WithListingTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class Index extends Component
+{
+    use AuthorizesRequests;
+    public $fId;
+    use WithListingTrait;
+    use WithPagination;
+
+    public $fields = [
+        DUMP_MY_ARR_FIELDS
+    ];
+
+    public function mount(){
+        $this->authorize("DUMP_MY_PERMISSION");
+    }
+
+    public function deleteRecord()
+    {
+        $this->authorize("DUMP_MY_DELETE_PERMISSION");
+        $data = DUMP_MY_MODEL_NAME::findOrFail($this->record_id);
+        if ($data) {
+            $data->delete();
+            $this->pushNotification("warning", "Deleted Successful!");
+        }
+        $this->dispatch("resetModal");
+    }
+
+    public function render()
+    {
+        $data = new DUMP_MY_MODEL_NAME();
+        if ($this->fId > 0) {
+            $data = $data->whereId($this->fId);
+        }
+        $data = $data->paginate(30);
+
+        return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.index', compact("data"))
+            ->layout("DUMP_MY_MODULE_SLUG::layouts.master", ['title' => "DUMP_MY_PAGE_NAME"]);
+    }
+}

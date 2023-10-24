@@ -2,21 +2,34 @@
 
 namespace Hungnm28\LivewireAdmin;
 
+use Hungnm28\LivewireAdmin\Supports\MenuSupport;
+use Hungnm28\LivewireAdmin\Supports\RouteSupport;
 use Illuminate\Support\ServiceProvider;
 
 class LivewireAdminServiceProvider extends ServiceProvider
 {
     protected $commands = [
-            Commands\MakeModule::class
-            ,Commands\ModuleLayout::class
-            ,Commands\ModuleSetup::class
-            ,Commands\ModelCommand::class
-            ,Commands\MakeFormTrait::class
-            ,Commands\MakeCreate::class
-        ];
+        Commands\ModelCommand::class,
+        Commands\MakePageCommand::class,
+        Commands\MakeFormTraitCommand::class,
+        Commands\MakeCreateCommand::class,
+        Commands\MakeEditCommand::class,
+        Commands\MakeShowCommand::class,
+        Commands\MakeIndexCommand::class,
+        Commands\MakeRouteCommand::class,
+        Commands\MakeLayoutCommand::class,
+        Commands\MakeAuthCommand::class,
+    ];
+
     public function register()
     {
         parent::register();
+        $this->app->bind('route-support', function ($app) {
+            return new RouteSupport();
+        });
+        $this->app->bind('menu-support', function ($app) {
+            return new MenuSupport();
+        });
     }
 
     public function boot()
@@ -37,6 +50,10 @@ class LivewireAdminServiceProvider extends ServiceProvider
     protected function registerPublishing()
     {
         $this->publishes([
+            __DIR__ . '/../publishes/lf' =>base_path("resources/views/components/lf"),
+            __DIR__ . '/../publishes/helpers' =>base_path("helpers"),
+            __DIR__ . '/../publishes/assets' =>base_path("resources/assets"),
+            __DIR__ . '/../publishes/icons/icons.svg' =>public_path("assets/images/icons.svg")
         ], 'livewire-admin');
     }
 

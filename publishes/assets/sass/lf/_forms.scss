@@ -1,0 +1,109 @@
+.form-container{
+    @apply w-full flex flex-wrap p-4;
+}
+.form-box{
+    @apply w-full block;
+}
+.form-field{
+    @apply w-full p-2 text-slate-600;
+    .form-label{
+        @apply text-sm font-medium block ;
+    }
+    .form-input,.form-textarea{
+        @apply w-full border-gray-300 rounded focus:ring-2 focus:border-[var(--c400)] ring-[var(--c400)];
+    }
+    .message{
+        @apply text-xs hidden;
+    }
+    &.error{
+        @apply text-orange-500;
+        .form-control{
+            @apply border-orange-400 ring-orange-400 bg-orange-50;
+        }
+        .message{
+            @apply block;
+        }
+    }
+    .checkboxs{
+        @apply w-full flex flex-wrap;
+        .item{
+            @apply inline-flex items-center mr-4 whitespace-nowrap ;
+            .form-checkbox,.form-radio{
+                @apply focus:ring-[var(--c700)] mr-2;
+                &:checked{
+                    @apply bg-[var(--c700)] right-0;
+                    &+.label{
+                        @apply font-bold text-[var(--c700)];
+                    }
+                }
+            }
+        }
+    }
+    .form-icon{
+        @apply w-full block;
+        .box-icons{
+            @apply w-full block max-h-60 overflow-auto bg-gray-100 p-2 rounded mt-2;
+            .icons{
+                @apply w-full flex flex-wrap;
+                .item{
+                    @apply flex-auto block  p-0.5;
+                }
+                .item-show{
+                    @apply w-full text-center block whitespace-nowrap border bg-white p-1 rounded cursor-pointer hover:bg-green-600 hover:text-white;
+                    .icon{
+                        @apply w-full flex items-center justify-center p-2;
+                    }
+                    &.active{
+                        @apply bg-green-600 text-white;
+                    }
+                }
+
+            }
+        }
+    }
+
+    .form-picture{
+        @apply w-full max-w-xs block overflow-hidden p-2 bg-gray-100 rounded cursor-pointer;
+        .picture{
+            @apply w-full block mb-2;
+            img{
+                @apply w-full;
+            }
+        }
+        input{
+            @apply bg-slate-200 cursor-pointer;
+        }
+    }
+
+    &.sm{
+        @apply text-sm;
+        .form-input,.form-textarea{
+            @apply py-1 px-2 rounded-sm;
+        }
+    }
+    &.xs{
+        @apply text-xs;
+        .form-input,.form-textarea{
+            @apply py-0.5 px-1 rounded-sm;
+        }
+    }
+}
+.form-group{
+    @apply w-full flex;
+    .form-field{
+        @apply p-0;
+        .form-input{
+            @apply rounded-none border-r-0;
+        }
+        &:last-child{
+            .form-input{
+                @apply border-r;
+            }
+        }
+    }
+
+}
+
+.form-footer{
+    @apply w-full flex p-6 justify-end space-x-4 border-t;
+}

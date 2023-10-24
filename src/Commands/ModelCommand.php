@@ -2,15 +2,16 @@
 
 namespace Hungnm28\LivewireAdmin\Commands;
 
-
-use Hungnm28\LivewireAdmin\Traits\WithCommandTrait;
+use Hungnm28\LivewireAdmin\Supports\ModelGenerator;
+use Hungnm28\LivewireAdmin\Traits\CommandTrait;
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 
 class ModelCommand extends Command
 {
-    use WithCommandTrait;
+    use CommandTrait;
 
-    protected $signature = 'la:model {name} {--model=} {--force}';
+    protected $signature = 'la:model {name}';
 
     protected $description = 'Generate Model class ';
 
@@ -32,70 +33,95 @@ class ModelCommand extends Command
         , "slug" => "SlugCast"
     ];
 
-
-
     public function handle()
     {
         $this->info("Generate Model: " . $this->argument("name"));
         $this->info("Run migrate");
         $this->call('migrate');
-        $this->initModel($this->argument("name"));
-        $this->createModel();
+        $this->backupModel();
+        $this->generateModel();
     }
 
-    protected function createModel()
+    private function generateModel()
     {
-        $fields = data_get($this->model,"fields",[]);
-        $dumpFields = "";
-        $dumpCastClass = [];
-        $dumpCasts = "";
-        $dumpListFields = "";
-        foreach ($fields as $f => $row) {
-            if (!in_array($f,$this->reservedColumn)) {
-                $dumpFields .= "\"$f\", ";
-            }
-            $dumpListFields .= ", \"$f\"";
-            $cast = data_get($this->castName, $f, data_get($this->castType, $row->type));
-            if ($cast && $this->checkCastExits($cast)) {
-                $dumpCastClass[$cast] = "use App\Casts\\$cast;";
-                $dumpCasts .= "\"$f\" => $cast::class,\r\n\t\t";
-            }//if ($cast)
-        }//foreach ($fields as $f => $row)
-        $dumpFields = trim($dumpFields, ", ");
-        $dumpListFields = trim($dumpListFields, ", ");
-        $dumpCasts = trim($dumpCasts, ",");
+        $name = $this->getModelName();
+        $modelGenerator = new ModelGenerator($name);
+        $fields = $modelGenerator->getFields();
+        $fieldNames = $this->getFieldNames($fields);
+        $casts = $this->getCasts($fields);
+        $tableName = $modelGenerator->getTableName();
+        $stub = $this->getStub("Model.stub");
+        $template = str_replace([
+            "DUMP_MY_CAST_CLASSES",
+            "DUMP_MY_CLASS_NAME",
+            "DUMP_MY_TABLE",
+            "DUMP_MY_FIELDS",
+            "DUMP_MY_CASTS",
+        ],[
+            implode("",$casts['castClasses']),
+            $name,
+            $tableName,
+            implode(", ",$fieldNames),
+            implode(", ".$this->showNewLine(4),$casts['casts'])
 
-        $stub = $this->getStub("model.stub");
-
-        $template = str_replace(
-            [
-                'DumpMyCastsClass',
-                'DumpMyClassName',
-                'DumpMyTable',
-                'DumpMyFillable',
-                'DumpMyListFields',
-                'DumpMyCasts'
-            ],
-            [
-                implode("\n", $dumpCastClass),
-                data_get($this->model,"name"),
-                data_get($this->model,"table"),
-                $dumpFields,
-                $dumpListFields,
-                $dumpCasts
-            ],
-            $stub
-        );
-        $pathSave = app_path("Models/" . $this->argument("name") . ".php");
+        ],$stub);
+        $pathSave = app_path("Models/$name.php");
         // Backup model
-        $pathBackup = app_path("Models/backups/" . $this->argument("name") . date("_Y_m_d_", time()).time() . ".backup");
+        $pathBackup = app_path("Models/backups/" . $name . date("_Y_m_d_", time()).time() . ".backup");
         $this->info("Backup old model to $pathBackup");
-        $this->writeFile($pathBackup, file_get_contents($pathSave));
+        if(file_exists($pathSave)){
+            $this->writeFile($pathBackup, file_get_contents($pathSave));
+        }
         $this->writeFile($pathSave, $template);
     }
 
-    protected function checkCastExits($name)
+    private function getCasts($fields)
     {
-        return class_exists("App\Casts\\$name");
+        $casts = [];
+        $castClasses = [];
+        foreach ($fields as $field=> $item) {
+            if (isset($this->castType[$item->type])) {
+                $castName = $this->castType[$item->type];
+                if ($this->checkCastExits($castName)) {
+                    $castClasses[$castName] = "use App\Casts\\$castName; \n";
+                    $casts[$field]= "\"$field\" => $castName::class";
+                }
+            }
+        }
+        return [
+            'casts' => $casts,
+            "castClasses" => $castClasses
+        ];
+    }
+
+
+
+    private function getFieldNames($fields)
+    {
+        $rt = [];
+        foreach ($fields as $field => $val) {
+            if (!$this->checkReservedField($field)) {
+                $rt[] = "\"$field\"";
+            }
+        }
+        return $rt;
+    }
+
+    private function getModelName()
+    {
+        $name = $this->argument("name");
+        $name = Str::singular($name);
+        return $name;
+    }
+
+    private function getModelPath($name)
+    {
+        return app_path("Models/$name.php");
+    }
+
+    private function backupModel()
+    {
+        $name = $this->getModelName();
+        $path = $this->getModelPath($name);
     }
 }

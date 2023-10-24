@@ -1,0 +1,20 @@
+<?php
+
+namespace DUMP_MY_NAMESPACE;
+
+use App\Models\DUMP_MY_MODEL_NAME;
+use Livewire\Component;
+
+class Show extends Component
+{
+    use FormTrait;
+
+    public function mount(){
+        $this->authorize("DUMP_MY_PERMISSION");
+    }
+    public function render()
+    {
+        $data = DUMP_MY_MODEL_NAME::with(["children", "parent"])->findOrFail($this->record_id);
+        return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.show', compact("data"));
+    }
+}

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelGenerator
 {
 
-    public $model;
+    public $model,$nameSpace,$className,$path;
 
     private $doctrineTypeMapping = [
         'string' => [
@@ -32,7 +32,7 @@ class ModelGenerator
 
     public function __construct($name)
     {
-        $this->getModel($name);
+        $this->init($name);
     }
 
     public function getFields()
@@ -67,6 +67,7 @@ class ModelGenerator
         }
 
         $table = $this->model->getConnection()->getTablePrefix() . $this->model->getTable();
+
         /** @var \Doctrine\DBAL\Schema\MySqlSchemaManager $schema */
         $schema = $this->model->getConnection()->getDoctrineSchemaManager();
         // custom mapping the types that doctrine/dbal does not support
@@ -90,20 +91,19 @@ class ModelGenerator
         return ucfirst(str_replace(['-', '_'], ' ', $value));
     }
 
-    protected function getModel($model)
+    protected function init($model)
     {
-
-        if ($model instanceof Model) {
-            return $this->model = $model;
-        }
-        if (class_exists($model) && is_subclass_of($model, Model::class)) {
-            return $this->model = new $model();
-        }
-        $model = "App\\Models\\$model";
-        if (class_exists($model) && is_subclass_of($model, Model::class)) {
-            return $this->model = new $model();
+        $nameSpace = "App\\Models\\$model";
+        if (class_exists($nameSpace) && is_subclass_of($nameSpace, Model::class)) {
+            $this->nameSpace = $nameSpace;
+            $this->className = $model;
+            $this->path = app_path("Models/$model");
+            return $this->model = new $nameSpace();
         }
         throw new \InvalidArgumentException("Invalid model [$model] !");
     }
 
+    public function getTableName(){
+        return  $this->model->getConnection()->getTablePrefix() . $this->model->getTable();
+    }
 }

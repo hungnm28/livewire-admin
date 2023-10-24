@@ -1,0 +1,1 @@
+Route::get('/DUMP_MY_PAGE_LOWER_NAME', \Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_PAGE_NAME\Index::class)->name(".DUMP_MY_PAGE_LOWER_NAME");

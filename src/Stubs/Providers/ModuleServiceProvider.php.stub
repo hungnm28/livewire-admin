@@ -1,23 +1,23 @@
 <?php
 
-namespace Modules\DumpMyModuleName\Providers;
+namespace Modules\DUMP_MY_MODULE_NAME\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class DumpMyModuleNameServiceProvider extends ServiceProvider
+class DUMP_MY_MODULE_NAMEServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'DumpMyModuleName';
+    protected $moduleName = 'DUMP_MY_MODULE_NAME';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'DumpMyModuleLowerName';
-    protected $moduleSlug = 'DumpMyModuleSlug';
+    protected $moduleNameLower = 'DUMP_MY_MODULE_LOWER_NAME';
+    protected $moduleSlug = 'DUMP_MY_MODULE_SLUG';
 
     /**
      * Boot the application events.
@@ -30,7 +30,7 @@ class DumpMyModuleNameServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-        Blade::componentNamespace('Modules\\DumpMyModuleName\\Views\\Components', $this->moduleSlug);
+        Blade::componentNamespace('Modules\\DUMP_MY_MODULE_NAME\\Views\\Components', $this->moduleSlug);
     }
 
     /**
@@ -55,12 +55,6 @@ class DumpMyModuleNameServiceProvider extends ServiceProvider
         ], 'config');
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'Config/config.php'), $this->moduleNameLower
-        );
-         $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/menu.php'), $this->moduleNameLower
-        );
-        $this->mergeConfigFrom(
-            module_path($this->moduleName, 'Config/permission.php'), $this->moduleNameLower
         );
     }
 

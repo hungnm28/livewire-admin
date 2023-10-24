@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@import "/resources/assets/sass/lf/index.scss";
+@import "layout";
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}

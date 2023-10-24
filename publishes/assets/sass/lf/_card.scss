@@ -1,0 +1,40 @@
+.card{
+    @apply w-full flex flex-col bg-white;
+    .card-header{
+        @apply w-full flex border-b h-12 items-center text-[var(--c50)] bg-[var(--c500)];
+        .title{
+            @apply px-4 text-xl font-medium;
+        }
+    }
+    .content{
+        @apply w-full flex flex-wrap p-2;
+    }
+    .card-footer{
+        @apply w-full flex p-2 items-center justify-between bg-slate-100 border-t;
+    }
+    &.default{
+        .card-header{
+            @apply text-slate-700 bg-white;
+        }
+    }
+    &.primary{
+        .card-header{
+            @apply text-blue-50 bg-blue-500;
+        }
+    }
+    &.info{
+        .card-header{
+            @apply text-green-50 bg-green-500;
+        }
+    }
+    &.warning{
+        .card-header{
+            @apply text-orange-50 bg-orange-500;
+        }
+    }
+    &.danger{
+        .card-header{
+            @apply text-red-50 bg-red-500;
+        }
+    }
+}
