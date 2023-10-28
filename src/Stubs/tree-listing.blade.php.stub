@@ -4,30 +4,16 @@
     </x-lf.filter>
     <x-lf.table>
         <tr>
+            <td></td>
             <th class="stt">#</th>
             DUMP_MY_TABLE_LABELS
             <th class="action">
                 <x-lf.table.fields :fields="$fields"/>
             </th>
         </tr>
-        @foreach($data as $item)
-            <tr>
-                <th class="stt">{{$item->id}}</th>
-                DUMP_MY_TABLE_ITEMS
-                <td class="action">
-                    @can('DUMP_MY_SHOW_PERMISSION')
-                        <span class="btn-info xs" title="info" wire:click="modalShow({{$item->id}})">{!! lfIcon("launch",10) !!}</span>
-                    @endcan
-                    @can('DUMP_MY_EDIT_PERMISSION')
-                        <span class="btn-primary xs" wire:click="modalEdit({{$item->id}})" title="Edit">{!! lfIcon("edit",10) !!}</span>
-                    @endcan
-                    @can('DUMP_MY_DELETE_PERMISSION')
-                        <span class="btn-warning xs" wire:click="modalDelete({{$item->id}})" title="Delete">{!! lfIcon("delete",10) !!}</span>
-                    @endcan
-                </td>
-            </tr>
-        @endforeach
+        {{$this->showTree($data)}}
     </x-lf.table>
+
     @can('DUMP_MY_SHOW_PERMISSION')
         @if($show && $record_id>0)
             <x-lf.modal class="sm:max-w-2xl" wire:model="show">

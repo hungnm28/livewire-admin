@@ -38,6 +38,7 @@ class MakeLayoutCommand extends Command
     {
         $this->info("Make Layout");
         $this->initModule($this->argument("module"));
+        $this->installViteConfig();
         $this->createCategories();
         $this->createMenu();
         $this->createLayoutView();
@@ -47,10 +48,21 @@ class MakeLayoutCommand extends Command
         $this->replaceRouteProvider();
         $this->replaceRoute();
         $this->createAssets();
+        $this->installViteConfig();
 
     }
 
+    private function installViteConfig(){
+        $pathVite = base_path("vite.config.js");
+        $arrAssets = [
+            '\'Modules/'.$this->getModuleName().'/Resources/assets/sass/app.scss\',',
+            '\'Modules/'.$this->getModuleName().'/Resources/assets/js/app.js\',',
+        ];
+        $this->insertDataAfter($pathVite,'\'resources/js/app.js\',','Modules/'.$this->getModuleName(),$this->showNewLine(6) .implode($this->showNewLine(6),$arrAssets));
+        sleep(1);
+        $this->insertDataAfter($pathVite,'\'app/Livewire/**\',','Modules/*/**',$this->showNewLine(6) .'\'Modules/*/**\',');
 
+    }
 
     private function replaceRoute()
     {
@@ -147,6 +159,7 @@ class MakeLayoutCommand extends Command
         return $this->createFile(
             path: $pathSave,
             name: 'index.blade.php',
+            data: ["DUMP_MY_SETTING_MENUS" => ''],
             stub: 'Layouts/menu/index.blade.php.stub'
             , force: true
         );

@@ -57,7 +57,10 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            $rt[$item->name] = '"'.$item->name.'" => ["status" => true, "label" => "' . $item->label . '"]';
+            if($item->name !="id"){
+                $rt[$item->name] = '"' . $item->name . '" => ["status" => true, "label" => "' . $item->label . '"]';
+
+            }
         }
         return $rt;
     }
@@ -67,7 +70,10 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            $rt[$item->name] = '<x-lf.table.label :$fields name="' . $item->name . '">' . $item->label . '</x-lf.table.label>';
+            if($item->name !="id"){
+                $rt[$item->name] = '<x-lf.table.label :$fields name="' . $item->name . '">' . $item->label . '</x-lf.table.label>';
+
+            }
         }
         return $rt;
     }
@@ -77,17 +83,37 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            switch ($item->type) {
-                case "json":
-                    $rt[$item->name] = '<x-lf.table.item :$fields name="' . $item->name . '">JSON FIELD</x-lf.table.item>';
-                    break;
-                default:
-                    $rt[$item->name] = '<x-lf.table.item :$fields name="' . $item->name . '">{{$item->' . $item->name . '}}</x-lf.table.item>';
+            if($item->name !="id"){
+                switch ($item->type) {
+                    case "json":
+                        $rt[$item->name] = '<x-lf.table.item :$fields name="' . $item->name . '">JSON FIELD</x-lf.table.item>';
+                        break;
+                    default:
+                        $rt[$item->name] = '<x-lf.table.item :$fields name="' . $item->name . '">{{$item->' . $item->name . '}}</x-lf.table.item>';
+                }
             }
+
         }
         return $rt;
     }
 
+    private function generateTableTreeItem()
+    {
+        $fields = $this->getFields();
+        $rt = [];
+        foreach ($fields as $item) {
+            if($item->name !="id") {
+                switch ($item->type) {
+                    case "json":
+                        $rt[$item->name] = '<x-lf.table.item :fields="$this->fields" name="' . $item->name . '">JSON FIELD</x-lf.table.item>';
+                        break;
+                    default:
+                        $rt[$item->name] = '<x-lf.table.item :fields="$this->fields" name="' . $item->name . '">{{$item->' . $item->name . '}}</x-lf.table.item>';
+                }
+            }
+        }
+        return $rt;
+    }
 
     private function generateShowFields()
     {
@@ -120,16 +146,16 @@ trait CommandTrait
                 switch ($item->type) {
                     case "text":
                     case "long-text":
-                        $rt[$field] = '<lf.form.textarea name="' . $item->name . '" class="form-input" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
+                        $rt[$field] = '<x-lf.form.textarea name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
                         break;
                     case "boolean":
-                        $rt[$field] = '<lf.form.checkbox name="' . $item->name . '" class="form-input" label="' . $item->label . '"/>';
+                        $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '" label="' . $item->label . '"/>';
                         break;
                     case "json":
-                        $rt[$field] = '<lf.form.array name="' . $item->name . '" class="form-input" label="' . $item->label . '"/>';
+                        $rt[$field] = '<x-lf.form.array name="' . $item->name . '" label="' . $item->label . '"/>';
                         break;
                     default:
-                        $rt[$field] = '<lf.form.input type="' . $item->type . '" name="' . $item->name . '" class="form-input" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
+                        $rt[$field] = '<x-lf.form.input type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
                         break;
                 }
             }
@@ -228,9 +254,11 @@ trait CommandTrait
         return Str::headline($str);
     }
 
-    private function getPageLowerName(){
+    private function getPageLowerName()
+    {
         return Str::lower($this->path);
     }
+
     private function isForce()
     {
         if ($this->hasOption("force")) {
@@ -343,8 +371,9 @@ trait CommandTrait
         return $permission;
     }
 
-    private function getLogoText(){
-        return Str::upper(Str::substr($this->getModuleHeadName(),0,3));
+    private function getLogoText()
+    {
+        return Str::upper(Str::substr($this->getModuleHeadName(), 0, 3));
     }
 
     private function getDotPath()
@@ -354,5 +383,22 @@ trait CommandTrait
             $data[] = $this->getSnakeString($name);
         }
         return implode(".", $data);
+    }
+
+    private function insertDataAfter($path, $flag,$check, $data)
+    {
+        if (!file_exists($path)) {
+            $this->error("File not exits: $path");
+            return false;
+        }
+        $template = file_get_contents($path);
+        if (!Str::contains($template, $check)) {
+            $template = str_replace($flag,
+                $flag. $data
+                , $template
+            );
+            return file_put_contents($path, $template);
+        }
+        return false;
     }
 }

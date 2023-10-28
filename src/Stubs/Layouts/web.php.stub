@@ -12,4 +12,3 @@
 |
 */
 Route::get('/', [\Modules\DUMP_MY_MODULE_NAME\Http\Controllers\DUMP_MY_MODULE_NAMEController::class,"index"]);
-//--- END-OF-ROUTE ---//

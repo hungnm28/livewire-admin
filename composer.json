@@ -12,7 +12,8 @@
     "autoload": {
         "psr-4": {
             "Hungnm28\\LivewireAdmin\\": "src/"
-        }
+        },
+        "files": ["./src/helpers/includes.php"]
     },
     "authors": [
         {

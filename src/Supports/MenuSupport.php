@@ -38,14 +38,15 @@ class MenuSupport
                 }
                 if (!empty($row)) {
                     $row["children"] = [];
-                    foreach ($item->find('.children . child') as $childNode) {
+                    foreach ($item->find('.children .child') as $childNode) {
+
                         $child = [];
-                        foreach ($childNode->find(".link") as $link) {
-                            if (preg_match('/\'([a-z.0-9]+)\'/', $link->href, $parent)) {
+                        foreach ($childNode->find(".child-link") as $link) {
+                            if (preg_match('/\'([a-z.0-9-]+)\'/', $link->href, $parent)) {
                                 $routeName = $parent[1];
                                 $child["route"] = $routeName;
                                 foreach ($link->find('.icon') as $icon) {
-                                    if (preg_match('/\'([a-z.0-9]+)\'/', $icon->text(), $icons)) {
+                                    if (preg_match('/\'([a-z.0-9-]+)\'/', $icon->text(), $icons)) {
                                         $child["icon"] = $icons[1];
                                     }
                                 }
@@ -55,12 +56,48 @@ class MenuSupport
                                     }
                                 }
                             }
+                            $child = $this->validateRow($child);
                             if (!empty($child)) {
                                 $row["children"][] = $child;
                             }
                         }
                     }
-                    $rt[] = $row;
+                    $row = $this->validateRow($row);
+                    if(!empty($row)){
+                        $rt[] = $row;
+                    }
+                }
+            }
+        }
+        return $rt;
+    }
+
+    private function validateRow($data){
+        $rt = [];
+        if(isset($data["route"])){
+            $rt['route'] = $data["route"];
+            $rt['children'] = data_get($data,"children",[]);
+            $rt['icon'] = data_get($data,"icon","circle");
+            $rt['label'] = data_get($data,"label","");
+        }
+        return $rt;
+    }
+
+    public function getAllParents($module){
+        $rt = [-1 => "ROOT"];
+        foreach($this->getMenu($module) as $k=> $item){
+            $rt[$k] = $item["route"];
+        }
+        return $rt;
+    }
+
+    public function getAllNavNames($module){
+        $rt = [];
+        foreach($this->getMenu($module) as $item){
+            $rt[$item["route"]] = $item["route"];
+            if(isset($item["children"]) && !empty($item["children"])){
+                foreach($item["children"] as $child){
+                    $rt[$child["route"]] = $child["route"];
                 }
             }
         }
@@ -100,9 +137,10 @@ class MenuSupport
         $childStub = $this->getStub("Layouts/menu/menu-children.stub");
         $itemHTML ="";
         foreach($data as $row){
-
             $childHtml = "";
-            if(!empty($orw["children"])){
+
+            if(!empty($row["children"])){
+
                 $childHtml = '<ul class="children">';
                 foreach($row['children'] as $child){
                     $childHtml .= str_replace([
@@ -131,7 +169,8 @@ class MenuSupport
             ],$itemStub);
 
         }
-        $stub = $this->getStub("Layouts/menu/categories.blade.php.stub",$module);
+
+        $stub = $this->getStub("Layouts/menu/categories.blade.php.stub");
         $template = str_replace([
             "DUMP_MY_MENUS"
         ],[

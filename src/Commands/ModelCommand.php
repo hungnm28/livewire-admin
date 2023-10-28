@@ -50,18 +50,24 @@ class ModelCommand extends Command
         $fieldNames = $this->getFieldNames($fields);
         $casts = $this->getCasts($fields);
         $tableName = $modelGenerator->getTableName();
+        $relationship = '';
+        if(in_array("\"parent_id\"",$fieldNames)){
+            $relationship = $this->generateRelationship($name);
+        }
         $stub = $this->getStub("Model.stub");
         $template = str_replace([
             "DUMP_MY_CAST_CLASSES",
             "DUMP_MY_CLASS_NAME",
             "DUMP_MY_TABLE",
             "DUMP_MY_FIELDS",
+            "DUMP_MY_RELATIONSHIP",
             "DUMP_MY_CASTS",
         ],[
             implode("",$casts['castClasses']),
             $name,
             $tableName,
             implode(", ",$fieldNames),
+            $relationship,
             implode(", ".$this->showNewLine(4),$casts['casts'])
 
         ],$stub);
@@ -72,7 +78,7 @@ class ModelCommand extends Command
         if(file_exists($pathSave)){
             $this->writeFile($pathBackup, file_get_contents($pathSave));
         }
-        $this->writeFile($pathSave, $template);
+        $this->writeFile($pathSave, $template,true);
     }
 
     private function getCasts($fields)
@@ -94,6 +100,15 @@ class ModelCommand extends Command
         ];
     }
 
+    private function generateRelationship($name){
+      return 'public function children(){
+        return $this->hasMany('.$name.'::class,"parent_id","id");
+    }
+
+    public function parent(){
+        return $this->belongsTo('.$name.'::class,"parent_id","id");
+    }';
+    }
 
 
     private function getFieldNames($fields)

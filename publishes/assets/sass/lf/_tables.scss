@@ -51,11 +51,14 @@
                 @apply h-full block w-0 border-l border-sky-500 absolute top-[100%];
             }
             &.lv-1{
-                @apply -ml-px;
+                @apply -ml-px ;
             }
             &:before{
                 content: "";
                 @apply ring-1 absolute -bottom-px -right-[2px] w-1 h-1 block z-10 ring-sky-500 bg-sky-50 ;
+            }
+            .root{
+                @apply block absolute w-2 h-2 border-l border-b top-[100%] -mt-2 border-sky-500 -left-2;
             }
         }
 
@@ -63,7 +66,4 @@
     .action{
         @apply border whitespace-nowrap text-right;
     }
-
-
-
 }

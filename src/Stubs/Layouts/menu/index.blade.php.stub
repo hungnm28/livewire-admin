@@ -17,8 +17,5 @@
         @endif
     </ul>
     <x-DUMP_MY_MODULE_SLUG::menu.categories />
-    <ul class="menu">
-        <!-- END-OF-MENU -->
-    </ul>
-
+    DUMP_MY_SETTING_MENUS
 </div>
