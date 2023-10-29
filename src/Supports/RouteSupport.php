@@ -11,12 +11,16 @@ class RouteSupport
     public function getNames($module=""){
         $data = [];
         foreach (Route::getRoutes() as $route) {
+            $routeName = "";
             if($module !=""){
                 if (Str::is( "$module.*", $route->getName())) {
-                    $data[] = $route->getName();
+                    $routeName= $route->getName();
                 }
             }else{
-                $data[] = $route->getName();
+                $routeName = $route->getName();
+            }
+            if($routeName !=""){
+                $data[] = $routeName;
             }
 
         }

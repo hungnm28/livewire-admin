@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\StringCast;
+use App\Casts\IntegerCast;
 
 class Permission extends Model
 {
@@ -31,6 +32,8 @@ class Permission extends Model
         "name" => StringCast::class,
 		"label" => StringCast::class,
 		"type" => StringCast::class,
+        "parent_id" => IntegerCast::class,
+
 
     ];
 }

@@ -1,0 +1,55 @@
+<?php
+
+namespace Modules\Admin\Livewire\Admins;
+
+use App\Models\Role;
+use App\Models\User;
+use Livewire\Component;
+
+class Create extends Component
+{
+    use FormTrait;
+    public $roles = [];
+    public function mount()
+    {
+        $this->authorize("admin.admins.create");
+    }
+
+
+    public function updatedEmail()
+    {
+        $user = User::whereEmail($this->email)->first();
+        if ($user) {
+            $this->record_id = $user->id;
+        }
+    }
+
+    public function store()
+    {
+        $this->authorize("admin.admins.create");
+        $this->validate();
+        $data = User::findOrFail($this->record_id);
+        $data->fill($this->getFieldDatas());
+        if(!$data->clean){
+            $data->update();
+            $this->pushNotification("success", "Created!");
+        }
+        $data->roles()->detach();
+        if($data->is_admin && !$data->is_super_admin){
+            $data->roles()->attach($this->roles);
+        }
+        $this->resetForm();
+        $this->dispatch("resetModal");
+    }
+
+    public function render()
+    {
+        $users = [];
+        if ($this->email) {
+            $users = User::where("email", "LIKE", "%$this->email%")->take(10)->pluck("email");
+        }
+        $user = User::find($this->record_id);
+        $allRoles = Role::get()->pluck("name","id");
+        return view('admin::livewire.admins.create', compact("users","user","allRoles"));
+    }
+}
