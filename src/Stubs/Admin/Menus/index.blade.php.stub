@@ -1,0 +1,37 @@
+<x-lf.page title="Menus">
+    <x-lf.filter>
+        <x-lf.form.select name="module" class="sm w-1/3" :params="$modules"/>
+    </x-lf.filter>
+    <x-lf.table>
+        <tr>
+            <td></td>
+            <th class="stt">#</th>
+            <th>Icon</th>
+            <th>Label</th>
+            <th>Route</th>
+            <th class="action">
+            </th>
+        </tr>
+        {{$this->showTree($data)}}
+    </x-lf.table>
+
+    @if($delete && $record_id !="")
+        <x-lf.modal class="sm:max-w-sm" wire:model="delete">
+            <x-lf.box.delete title="Menus - Delete" />
+        </x-lf.modal>
+    @endif
+
+    @if($create)
+        <x-lf.modal wire:model="create" class="sm:max-w-md">
+            <livewire:DUMP_MY_MODULE_SLUG::menus.create key="create"/>
+        </x-lf.modal>
+    @endif
+
+    <x-slot:tools>
+        <span class="h-btn" title="Add" wire:click="modalCreate">{!! lfIcon("add") !!}</span>
+    </x-slot:tools>
+
+    <x-slot:footer>
+        <span><label class="btn" wire:click="modalCreate">Create</label></span>
+    </x-slot:footer>
+</x-lf.page>

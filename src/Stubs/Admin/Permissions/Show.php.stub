@@ -1,0 +1,20 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Permissions;
+
+use App\Models\Permission;
+use Livewire\Component;
+
+class Show extends Component
+{
+    use FormTrait;
+
+    public function mount(){
+        $this->authorize("DUMP_MY_MODULE_SLUG.permissions");
+    }
+    public function render()
+    {
+        $data = Permission::with(["children", "parent"])->findOrFail($this->record_id);
+        return view('DUMP_MY_MODULE_SLUG::livewire.permissions.show', compact("data"));
+    }
+}

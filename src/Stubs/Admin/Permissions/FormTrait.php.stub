@@ -1,0 +1,82 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Permissions;
+
+use App\Models\Permission;
+use Hungnm28\LivewireAdmin\Facades\RouteSupport;
+use Hungnm28\LivewireAdmin\Traits\WithFormTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
+
+trait FormTrait
+{
+    use WithFormTrait;
+    use AuthorizesRequests;
+
+    public $record_id, $name, $label, $parent_id, $type = 'page', $methods = [];
+
+    protected function rules()
+    {
+        $rules = [
+            "name" => "string|required|unique:permissions,name,$this->record_id",
+            "label" => "",
+            "parent_id" => "",
+            "type" => ""
+        ];
+
+        return $rules;
+    }
+
+    private function setFields()
+    {
+        $data = Permission::with("children")->find($this->record_id);
+        $this->name = data_get($data, "name");
+        $this->label = data_get($data, "label");
+        $this->parent_id = data_get($data, "parent_id", 0);
+        $this->type = data_get($data, "type", 'page');
+        if (!empty($data->children)) {
+            $this->methods = $data->children->pluck("label", "name");
+        }
+    }
+
+    private function getTypes(){
+        return ["page"=>"Page","method"=>"Method"];
+    }
+
+    private function getRoutes()
+    {
+        $rt = [];
+        $routes = RouteSupport::getNames();
+        $allPermissions= Permission::get()->pluck("name")->toArray();
+        $routes = array_diff($routes,$allPermissions);
+        foreach(Module::all() as $mod){
+            $modName = $mod->getLowerName();
+            foreach($routes as $route){
+                if(Str::is($modName.".*",$route)){
+                    $rt[] = $route;
+                }
+            }
+        }
+
+        return $rt;
+    }
+
+    private function getParents()
+    {
+        return Permission::whereParentId(0)->get()->pluck("label", "id")->prepend("ROOT", 0);
+    }
+
+    private function getFieldDatas()
+    {
+        $data = [
+            "name" => $this->name,
+            "label" => $this->label,
+            "parent_id" => $this->parent_id,
+            "type" => $this->type
+        ];
+
+        return $data;
+    }
+
+}

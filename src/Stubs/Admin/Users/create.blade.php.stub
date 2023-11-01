@@ -1,0 +1,6 @@
+<x-lf.box.create title="Users - Create">
+    <x-lf.form.input type="string" name="name" autocomplete="new-name" label="Name" placeholder="Name ..."/>
+	<x-lf.form.input type="string" name="email" autocomplete="new-email" label="Email" placeholder="Email ..."/>
+	<x-lf.form.input type="password" name="password" autocomplete="new-password" label="Password" placeholder="Password ..."/>
+	<x-lf.form.input type="password" name="password_confirm" autocomplete="new-password" label="Password Confirmation" placeholder="Password Confirmation ..."/>
+</x-lf.box.create>

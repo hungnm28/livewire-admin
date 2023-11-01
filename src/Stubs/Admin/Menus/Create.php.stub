@@ -1,0 +1,66 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Menus;
+
+use Hungnm28\LivewireAdmin\Facades\MenuSupport;
+use Hungnm28\LivewireAdmin\Facades\RouteSupport;
+use Hungnm28\LivewireAdmin\Traits\WithLivewireFormTrait;
+use Livewire\Component;
+use Nwidart\Modules\Facades\Module;
+
+class Create extends Component
+{
+    use WithLivewireFormTrait;
+    public $module='admin', $route, $label, $icon, $permission, $parent_id = -1, $sort = 0;
+    protected $rules = [
+         "route" => "string|required"
+        , "label" => "string|required"
+    ];
+    public function mount()
+    {
+        $this->authorize("DUMP_MY_MODULE_SLUG.settings.menus.create");
+    }
+
+    public function store(){
+        $this->validate();
+        $data = [
+            "label"=>$this->label
+            ,"route"=>$this->route
+            ,"icon"=>$this->icon
+        ];
+
+        MenuSupport::setMenu($data,$this->parent_id,$this->sort,$this->module);
+     //   $this->pushNotification("success","Thêm mới thành công");
+        return $this->dispatch("resetModal");
+    }
+
+    public function render(){
+
+        $modules = [""=>"Select Module"];
+        $parents = MenuSupport::getAllParents($this->module);
+        $sorts = [0 => "First"];
+        $routes = [];
+        $allNav = MenuSupport::getAllNavNames($this->module);
+        foreach(RouteSupport::getNames($this->module) as $rt){
+            if(!in_array($rt,$allNav)){
+                $routes[] = $rt;
+            }
+        }
+        $navbars = MenuSupport::getMenu($this->module);
+        if ($this->parent_id == -1) {
+            $siblings = $navbars;
+        } else {
+            $siblings = data_get($navbars, $this->parent_id . ".children", []);
+        }
+        foreach ($siblings as $k => $sibling) {
+            $sorts[$k] = "Before  " . $sibling["label"];
+        }
+        $sorts[] = "After";
+
+        foreach(Module::allEnabled() as $item){
+            $modules[$item->getLowerName()] = $item->getStudlyName();
+        }
+
+        return view('DUMP_MY_MODULE_SLUG::livewire.menus.create',compact("parents", "sorts", "routes","modules"));
+    }
+}

@@ -1,0 +1,55 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Users;
+
+use App\Models\User;
+use Hungnm28\LivewireAdmin\Traits\WithFormTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Hash;
+
+trait FormTrait
+{
+    use WithFormTrait;
+    use AuthorizesRequests;
+
+    public $record_id, $name, $email, $email_verified_at, $password, $password_confirm, $current_team_id, $profile_photo_path, $is_admin, $is_super_admin;
+
+    protected function rules()
+    {
+        $rules = [
+            "name" => "string",
+			"email" => "email|required|unique:users,email,". $this->record_id,
+        ];
+        if($this->record_id>0){
+            if($this->password){
+                $rules["password"] = "required|min:8";
+                $rules["password_confirm"] = "required_with:password|same:password";
+            }
+        }else{
+            $rules["password"] = "required|min:8";
+            $rules["password_confirm"] = "required_with:password|same:password";
+        }
+        return $rules;
+    }
+
+    private function setFields()
+    {
+        $data = User::find($this->record_id);
+        $this->name = data_get($data, "name");
+		$this->email = data_get($data, "email");
+    }
+
+    private function getFieldDatas()
+    {
+        $data = [
+            "name" => $this->name,
+			"email" => $this->email,
+        ];
+        if($this->password){
+            $data["password"] = Hash::make($this->password);
+        }
+
+        return $data;
+    }
+
+}

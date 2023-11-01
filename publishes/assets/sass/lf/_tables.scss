@@ -6,7 +6,7 @@
     th{
         @apply text-gray-600 text-xs;
         &.stt,&.action{
-            @apply w-0 border;
+            @apply w-0 border whitespace-nowrap;
         }
     }
     tr{

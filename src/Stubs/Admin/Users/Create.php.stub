@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Admin\Livewire\Admins;
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Admins;
 
 use App\Models\Role;
 use App\Models\User;
@@ -12,7 +12,7 @@ class Create extends Component
     public $roles = [];
     public function mount()
     {
-        $this->authorize("admin.admins.create");
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins.create");
     }
 
 
@@ -50,6 +50,6 @@ class Create extends Component
         }
         $user = User::find($this->record_id);
         $allRoles = Role::get()->pluck("name","id");
-        return view('admin::livewire.admins.create', compact("users","user","allRoles"));
+        return view('DUMP_MY_MODULE_SLUG::livewire.admins.create', compact("users","user","allRoles"));
     }
 }

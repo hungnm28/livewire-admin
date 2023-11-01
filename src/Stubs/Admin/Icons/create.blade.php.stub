@@ -1,0 +1,16 @@
+<x-lf.box.create title="Icon Create">
+    <div class="w-full flex-auto">
+        <div class="flex-auto w-full mt-2 border-[var(--c300)] bg-[var(--c100)] p-4 border text-[var(--c600)]">
+            <b>Lưu ý:</b>
+            <div>- Chỉ thực hiện thêm icon ở <b>localhost</b>.</div>
+            <div>- Không thêm icon ở <b>server</b>.</div>
+            <p>- Truy cập trang <a href="https://fonts.google.com/icons" target="_blank" class="font-bold text-blue-500">Google font icon</a></p>
+            <p>- Chọn icon, tải về với <span class="font-bold text-blue-500">size 24</span></p>
+            <p>- Upload và nhập tên icon</p>
+        </div>
+    </div>
+    <x-lf.form.picture name="file" class="w-1/2" :src="$file_url" />
+    <x-lf.form.input name="name" label="Icon Name" class="w-full" placeholder="Icon Name..." />
+    <x-lf.form.input name="width" label="Width" class="w-1/2" placeholder="Icon width..." />
+    <x-lf.form.input name="height" label="Height" class="w-1/2" placeholder="Icon height..." />
+</x-lf.box.create>

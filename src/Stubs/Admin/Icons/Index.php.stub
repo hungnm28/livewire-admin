@@ -1,0 +1,22 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Icons;
+
+use Hungnm28\LivewireAdmin\Traits\WithListingTrait;
+use Livewire\Component;
+
+class Index extends Component
+{
+    use WithListingTrait;
+
+    public function mount()
+    {
+        $this->authorize("DUMP_MY_MODULE_SLUG.settings.icons");
+    }
+    public function render()
+    {
+        return view('DUMP_MY_MODULE_SLUG::livewire.icons.index')
+            ->layout('DUMP_MY_MODULE_SLUG::layouts.master',['title'=>"Icons"]);
+    }
+
+}
