@@ -23,6 +23,7 @@ class CreateAdminModuleCommand extends Command
         $this->call('la:make-auth');
         $this->call('la:make-layout', ['module' => $moduleName]);
         $this->call('la:make-admin', ['module' => $moduleName]);
+        $this->call('migrate');
         $confirm = confirm("Would you like create new admin user?");
         if($confirm){
             $this->call('la:create-user');
