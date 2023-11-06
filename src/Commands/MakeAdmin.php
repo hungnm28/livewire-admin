@@ -29,15 +29,15 @@ class MakeAdmin extends Command
             ]
             , "Menus" => [
                 "classes" => ['Index.php', 'Create.php'],
-                "views" => ['index.blade.php', 'create.blade.php','tree.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php', 'tree.blade.php']
             ]
             , "Permissions" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],
-                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php','tree.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php', 'tree.blade.php']
             ]
             , "Roles" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],
-                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php','permission-form.blade.php','show-permissions.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php', 'permission-form.blade.php', 'show-permissions.blade.php']
             ]
             , "Admins" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],
@@ -49,6 +49,8 @@ class MakeAdmin extends Command
             ]
         ];
         $this->makePages($pages);
+        $this->makeNavbar();
+        $this->makeRoute();
 
     }
 
@@ -88,5 +90,28 @@ class MakeAdmin extends Command
                 , force: true
             );
         }
+    }
+
+    private function makeNavbar()
+    {
+        $pathSave = $this->getModulepath("Resources/views/components/menu/categories.blade.php");
+        $stub = "Admin/components/menu/categories.blade.php.stub";
+        $this->createFile(
+            path: $pathSave
+            , name: 'categories.blade.php'
+            , stub: $stub
+            , force: true
+        );
+    }
+
+    private function makeRoute(){
+        $pathSave = $this->getModulepath("Routes/web.php");
+        $stub = "Admin/Routes/web.php.stub";
+        $this->createFile(
+            path: $pathSave
+            , name: 'categories.blade.php'
+            , stub: $stub
+            , force: true
+        );
     }
 }
