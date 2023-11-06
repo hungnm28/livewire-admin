@@ -19,7 +19,7 @@
         {{$this->showTree($data)}}
     </x-lf.table>
 
-    @can('admin.permissions.show')
+    @can('DUMP_MY_MODULE_SLUG.permissions.show')
         @if($show && $record_id>0)
             <x-lf.modal class="sm:max-w-2xl" wire:model="show">
                 <livewire:DUMP_MY_MODULE_SLUG::permissions.show :record_id="$record_id" :key="'show-' . $record_id"/>

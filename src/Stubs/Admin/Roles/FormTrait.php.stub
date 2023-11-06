@@ -1,0 +1,100 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Roles;
+
+use App\Models\Permission;
+use App\Models\Role;
+use Hungnm28\LivewireAdmin\Traits\WithFormTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Str;
+
+trait FormTrait
+{
+    use WithFormTrait;
+    use AuthorizesRequests;
+
+    public $record_id, $name, $label, $permissions = [];
+
+    protected function rules()
+    {
+        $rules = [
+            "name" => "string|required"
+        ];
+        return $rules;
+    }
+
+    public function updated($key, $value)
+    {
+        $explode = Str::of($key)->explode(".");
+        if ($explode[0] == "permissions") {
+            $record = intval($explode->last());
+            $permission = Permission::with("children")->findOrFail($record);
+            if ($value) {
+                if ($permission->parent_id > 0) {
+                    $this->rtCheckedItem($permission->parent_id);
+                }
+                $this->rtCheckdChildren($permission->id, true);
+            } else {
+                $this->rtCheckdChildren($permission->id, false);
+            }
+        }
+    }
+
+    private function rtCheckedItem($record)
+    {
+        if ($record > 0) {
+            $item = Permission::find($record);
+            if ($item) {
+                $this->permissions[$item->id] = true;
+                if ($item->parent_id > 0) {
+                    $this->rtCheckedItem($item->parent_id);
+                }
+            }
+        }
+    }
+
+    private function rtCheckdChildren($record, $val = false)
+    {
+        Permission::whereParentId($record)->get()->map(function ($item) use ($val) {
+            $this->permissions[$item->id] = $val;
+            $this->rtCheckdChildren($item->id, $val);
+        });
+    }
+
+    private function setFields()
+    {
+        $data = Role::with(["permissions"])->find($this->record_id);
+        $this->name = data_get($data, "name");
+        if ($data) {
+            foreach ($data->permissions as $per) {
+                $this->permissions[$per->id] = true;
+            }
+        }
+
+    }
+
+    private function getPermissions(){
+        $rt = [];
+        foreach($this->permissions as $k => $val){
+            if($val){
+                $rt[$k] = $k;
+            }
+        }
+        return $rt;
+    }
+    private function getFieldDatas()
+    {
+        $data = [
+            "name" => $this->name,
+        ];
+
+        return $data;
+    }
+
+    public function showPermissionForm($parent_id = 0, $level = 0)
+    {
+        $data = Permission::whereParentId($parent_id)->get()->pluck("label", "id");
+        return view("DUMP_MY_MODULE_SLUG::livewire.roles.permission-form", compact("data", "level"));
+    }
+
+}

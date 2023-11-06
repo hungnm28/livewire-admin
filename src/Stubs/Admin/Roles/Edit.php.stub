@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Permissions;
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Roles;
 
-use App\Models\Permission;
+use App\Models\Role;
 use Livewire\Component;
 
 class Edit extends Component
@@ -11,18 +11,20 @@ class Edit extends Component
 
     public function mount()
     {
-        $this->authorize("DUMP_MY_MODULE_SLUG.permissions.edit");
+        $this->authorize("DUMP_MY_MODULE_SLUG.roles.edit");
         $this->setFields();
     }
 
     public function store()
     {
-        $this->authorize("DUMP_MY_MODULE_SLUG.permissions.edit");
+        $this->authorize("DUMP_MY_MODULE_SLUG.roles.edit");
         $this->validate();
-        $data = Permission::findOrFail($this->record_id);
+        $data = Role::findOrFail($this->record_id);
         $data->fill($this->getFieldDatas());
         if (!$data->clean) {
             $data->update();
+            $data->permissions()->detach();
+            $data->permissions()->attach($this->getPermissions());
             $this->pushNotification("success", "Updated successful!");
         }
         $this->dispatch("resetModal");
@@ -31,6 +33,6 @@ class Edit extends Component
     public function render()
     {
 
-        return view('DUMP_MY_MODULE_SLUG::livewire.permissions.edit');
+        return view('DUMP_MY_MODULE_SLUG::livewire.roles.edit');
     }
 }

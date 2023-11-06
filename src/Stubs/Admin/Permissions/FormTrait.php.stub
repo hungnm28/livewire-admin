@@ -14,7 +14,7 @@ trait FormTrait
     use WithFormTrait;
     use AuthorizesRequests;
 
-    public $record_id, $name, $label, $parent_id, $type = 'page', $methods = [];
+    public $record_id, $name, $label, $parent_id, $type = 'method', $methods = [];
 
     protected function rules()
     {
@@ -40,20 +40,40 @@ trait FormTrait
         }
     }
 
-    private function getTypes(){
-        return ["page"=>"Page","method"=>"Method"];
+    private function getTypes()
+    {
+        return ["page" => "Page", "method" => "Method"];
+    }
+
+    private function getSuggest()
+    {
+        if ($this->type == "method") {
+            $methods = [];
+            $pre = "";
+            $parent = Permission::find($this->parent_id);
+            if ($parent) {
+                $pre = $parent->name;
+            }
+            foreach (['create', 'edit', 'delete', 'show'] as $item) {
+                $methods[] = "$pre.$item";
+            }
+            $allPermissions = Permission::get()->pluck("name")->toArray();
+            $methods = array_diff($methods, $allPermissions);
+            return $methods;
+        }
+        return $this->getRoutes();
     }
 
     private function getRoutes()
     {
         $rt = [];
         $routes = RouteSupport::getNames();
-        $allPermissions= Permission::get()->pluck("name")->toArray();
-        $routes = array_diff($routes,$allPermissions);
-        foreach(Module::all() as $mod){
+        $allPermissions = Permission::get()->pluck("name")->toArray();
+        $routes = array_diff($routes, $allPermissions);
+        foreach (Module::all() as $mod) {
             $modName = $mod->getLowerName();
-            foreach($routes as $route){
-                if(Str::is($modName.".*",$route)){
+            foreach ($routes as $route) {
+                if (Str::is($modName . ".*", $route)) {
                     $rt[] = $route;
                 }
             }
@@ -64,7 +84,17 @@ trait FormTrait
 
     private function getParents()
     {
-        return Permission::whereParentId(0)->get()->pluck("label", "id")->prepend("ROOT", 0);
+        return $this->rtGetParent();
+    }
+
+    private function rtGetParent($parent_id = 0, $data = [0 => 'ROOT'], $level = 0)
+    {
+        return Permission::whereType('page')->whereParentId($parent_id)->get()->reduce(function ($rt, $item) use ($level) {
+
+            $rt[$item->id] = Str::repeat("-- ", $level) . $item->label . " ($item->name)";
+            $rt = $this->rtGetParent($item->id, $rt, ++$level);
+            return $rt;
+        }, $data);
     }
 
     private function getFieldDatas()

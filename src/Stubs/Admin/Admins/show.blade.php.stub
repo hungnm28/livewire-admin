@@ -4,19 +4,19 @@
             <th class="stt">Id:</th>
             <td>{{$data->id}}</td>
         </tr>
-		<tr>
+        <tr>
             <th class="stt">Name:</th>
             <td>{{$data->name}}</td>
         </tr>
-		<tr>
+        <tr>
             <th class="stt">Email:</th>
             <td>{{$data->email}}</td>
         </tr>
-		<tr>
+        <tr>
             <th class="stt">Is admin:</th>
             <td>{{$data->is_admin}}</td>
         </tr>
-		<tr>
+        <tr>
             <th class="stt">Is super admin:</th>
             <td>{{$data->is_super_admin}}</td>
         </tr>
@@ -33,4 +33,12 @@
             </td>
         </tr>
     </table>
+    <x-slot:footer>
+        @can('DUMP_MY_MODULE_SLUG.admins.edit')
+            <span class="btn-primary" wire:click="$parent.modalEdit({{$record_id}})">Edit</span>
+        @endcan
+        @can('DUMP_MY_MODULE_SLUG.admins.delete')
+            <span class="btn-warning" wire:click="$parent.modalDelete({{$record_id}})">Delete</span>
+        @endcan
+    </x-slot:footer>
 </x-lf.box.show>

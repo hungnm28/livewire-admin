@@ -21,7 +21,6 @@ class Create extends Component
     }
 
     public function mount(){
-        $this->authorize("DUMP_MY_MODULE_SLUG.settings.icons.create");
         $this->data  = IconSupport::getIconNames();
     }
 

@@ -1,0 +1,11 @@
+<ul class="permissions-form level-{{$level}}">
+    @foreach($data as $k => $label)
+        <li class="item">
+            <label>
+                <input type="checkbox"  wire:model.live="permissions.{{$k}}" value="{{$k}}">
+                <span>{{$label}}</span>
+            </label>
+            {!! $this->showPermissionForm($k,$level+1) !!}
+        </li>
+    @endforeach
+</ul>

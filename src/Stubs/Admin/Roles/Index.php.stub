@@ -1,0 +1,67 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Roles;
+
+use App\Models\Role;
+use Hungnm28\LivewireAdmin\Traits\WithListingTrait;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class Index extends Component
+{
+    public $fId;
+    use WithListingTrait;
+    use WithPagination;
+
+    public $fields = [
+       "name" => ["status" => true, "label" => "Name"],
+		"permissions" => ["status" => true, "label" => "Permissions"],
+		"created_at" => ["status" => true, "label" => "Created at"],
+		"updated_at" => ["status" => true, "label" => "Updated at"]
+    ];
+
+    public function mount(){
+        $this->authorize("DUMP_MY_MODULE_SLUG.roles");
+    }
+
+    public function deleteRecord()
+    {
+        $this->authorize("DUMP_MY_MODULE_SLUG.roles.delete");
+        $data = Role::findOrFail($this->record_id);
+        if ($data) {
+            $data->permissions()->detach();
+            $data->delete();
+            $this->pushNotification("warning", "Deleted Successful!");
+        }
+        $this->dispatch("resetModal");
+    }
+
+
+    public function render()
+    {
+        $data = Role::with(["permissions"]);
+        if($this->fId >0){
+            $data = $data->whereId($this->fId);
+        }
+        $data = $data->paginate(30);
+
+        return view('DUMP_MY_MODULE_SLUG::livewire.roles.index', compact("data"))
+            ->layout("DUMP_MY_MODULE_SLUG::layouts.master", ['title' => 'Roles']);
+    }
+
+    private function rtShowPermissions($permissions,$parent_id=0){
+        if($parent_id == 0){
+            $permissions = $this->formatPermissions($permissions);
+        }
+        return view("DUMP_MY_MODULE_SLUG::livewire.roles.show-permissions",compact(['permissions',"parent_id"]));
+    }
+
+    private function formatPermissions($data=[]){
+        $return = [];
+        foreach($data as $item){
+            $return[$item->parent_id][] = $item;
+        }
+        return $return;
+    }
+
+}

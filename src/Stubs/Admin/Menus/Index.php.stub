@@ -9,7 +9,7 @@ use Nwidart\Modules\Facades\Module;
 
 class Index extends Component
 {
-    public $module = "admin";
+    public $module = "DUMP_MY_MODULE_SLUG";
     use WithListingTrait;
 
     public function __construct()
@@ -17,10 +17,7 @@ class Index extends Component
         $this->listeners[] = "modalDelete";
         $this->listeners[] = "resetModal";
     }
-    public function mount()
-    {
-        $this->authorize("DUMP_MY_MODULE_SLUG.settings.menus");
-    }
+
     public function deleteRecord()
     {
         MenuSupport::deleteMenu($this->record_id, $this->module);

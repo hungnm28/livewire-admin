@@ -21,4 +21,12 @@
             <td>{{$data->updated_at}}</td>
         </tr>
     </table>
+    <x-slot:footer>
+        @can('DUMP_MY_MODULE_SLUG.users.edit')
+            <span class="btn-primary" wire:click="$parent.modalEdit({{$record_id}})">Edit</span>
+        @endcan
+        @can('DUMP_MY_MODULE_SLUG.users.delete')
+            <span class="btn-warning" wire:click="$parent.modalDelete({{$record_id}})">Delete</span>
+        @endcan
+    </x-slot:footer>
 </x-lf.box.show>

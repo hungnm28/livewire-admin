@@ -29,15 +29,15 @@ class MakeAdmin extends Command
             ]
             , "Menus" => [
                 "classes" => ['Index.php', 'Create.php'],
-                "views" => ['index.blade.php', 'create.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php','tree.blade.php']
             ]
             , "Permissions" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],
-                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php','tree.blade.php']
             ]
             , "Roles" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],
-                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php']
+                "views" => ['index.blade.php', 'create.blade.php', 'edit.blade.php', 'show.blade.php','permission-form.blade.php','show-permissions.blade.php']
             ]
             , "Admins" => [
                 "classes" => ['Index.php', 'FormTrait.php', 'Create.php', 'Edit.php', 'Show.php'],

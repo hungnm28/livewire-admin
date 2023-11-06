@@ -11,15 +11,11 @@ use Nwidart\Modules\Facades\Module;
 class Create extends Component
 {
     use WithLivewireFormTrait;
-    public $module='admin', $route, $label, $icon, $permission, $parent_id = -1, $sort = 0;
+    public $module='DUMP_MY_MODULE_SLUG', $route, $label, $icon, $permission, $parent_id = -1, $sort = 0;
     protected $rules = [
          "route" => "string|required"
         , "label" => "string|required"
     ];
-    public function mount()
-    {
-        $this->authorize("DUMP_MY_MODULE_SLUG.settings.menus.create");
-    }
 
     public function store(){
         $this->validate();

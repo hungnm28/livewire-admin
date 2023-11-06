@@ -31,6 +31,45 @@ class Index extends Component
         $this->authorize("DUMP_MY_MODULE_SLUG.admins");
     }
 
+    public function changeAdmin($iUser)
+    {
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins.edit");
+        if (auth()->user()->id == $iUser) {
+            abort(403);
+        }
+        $data = User::findOrFail($iUser);
+        if ($data->is_super_admin) {
+            $data->update([
+                "is_admin" => false
+                , "is_super_admin" => false
+            ]);
+        } else {
+            $data->update([
+                "is_admin" => !$data->is_admin
+            ]);
+        }
+    }
+
+    public function changeSuperAdmin($iUser)
+    {
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins.edit");
+        if (auth()->user()->id == $iUser || !auth()->user()->is_super_admin) {
+            abort(403);
+        }
+        $data = User::findOrFail($iUser);
+        if ($data->is_super_admin) {
+            $data->update([
+                "is_super_admin" => false
+            ]);
+        } else {
+            $data->update([
+                "is_admin" => true
+                , "is_super_admin" => true
+
+            ]);
+        }
+    }
+
     public function deleteRecord()
     {
         $this->authorize("DUMP_MY_MODULE_SLUG.admins.delete");

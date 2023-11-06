@@ -3,7 +3,6 @@
 namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Permissions;
 
 use App\Models\Permission;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Create extends Component
@@ -28,24 +27,6 @@ class Create extends Component
         }
 
         $this->dispatch("resetModal");
-    }
-
-    public function showMethods()
-    {
-        $df = [
-            "create" => "Create"
-            , "edit" => "Edit"
-            , "delete" => "Delete"
-            , "show" => "Show"
-        ];
-        $methods = $this->methods;
-        foreach($df as $k =>$label){
-            $key = $this->name.".$k";
-            $methods[$key] = $label;
-        }
-        $this->methods = $methods;
-        $this->add_method = true;
-
     }
 
     public function render()

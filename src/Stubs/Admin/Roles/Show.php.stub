@@ -1,0 +1,32 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Roles;
+
+use App\Models\Role;
+use Livewire\Component;
+
+class Show extends Component
+{
+    use FormTrait;
+
+    public function mount(){
+        $this->authorize("DUMP_MY_MODULE_SLUG.roles");
+    }
+
+    private function rtShowPermissions($permissions=[],$parent_id=0){
+        if($parent_id ==0){
+            $data = [];
+            foreach($permissions as $item){
+                $data[$item->parent_id][] = $item;
+            }
+            $permissions = $data;
+        }
+        return view("DUMP_MY_MODULE_SLUG::livewire.roles.show-permissions",compact("permissions","parent_id"));
+    }
+
+    public function render()
+    {
+        $data = Role::with(["permissions"])->findOrFail($this->record_id);
+        return view('DUMP_MY_MODULE_SLUG::livewire.roles.show', compact("data"));
+    }
+}

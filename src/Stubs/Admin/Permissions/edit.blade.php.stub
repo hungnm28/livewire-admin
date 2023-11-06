@@ -1,6 +1,6 @@
 <x-lf.box.edit title="Permissions - Edit">
+    <x-lf.form.select  name="parent_id" class="w-1/2" label="Parent" :params="$this->getParents()"/>
+    <x-lf.form.select name="type" class="w-1/2" label="Type" :params="$this->getTypes()"/>
     <x-lf.form.input type="string" name="name" label="Name" placeholder="Name ..."/>
 	<x-lf.form.input type="string" name="label" label="Label" placeholder="Label ..."/>
-	<x-lf.form.input type="integer" name="parent_id" label="Parent id" placeholder="Parent id ..."/>
-	<x-lf.form.input type="string" name="type" label="Type" placeholder="Type ..."/>
 </x-lf.box.edit>

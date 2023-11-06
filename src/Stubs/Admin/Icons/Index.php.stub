@@ -9,10 +9,6 @@ class Index extends Component
 {
     use WithListingTrait;
 
-    public function mount()
-    {
-        $this->authorize("DUMP_MY_MODULE_SLUG.settings.icons");
-    }
     public function render()
     {
         return view('DUMP_MY_MODULE_SLUG::livewire.icons.index')
