@@ -11,9 +11,9 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["name", "label"];
+    protected $fillable = ["name"];
 
-    public static $listFields = ["id", "name", "label", "created_at", "updated_at"];
+    public static $listFields = ["id", "name", "created_at", "updated_at"];
 
     public function permissions(){
         return $this->belongsToMany(Permission::class,'roles_permissions',"role_id","permission_id","id","id");
@@ -24,9 +24,7 @@ class Role extends Model
 
     }
     protected $casts = [
-        "name" => StringCast::class,
-		"label" => StringCast::class,
-		"type" => BooleanCast::class,
+        "name" => StringCast::class
 
     ];
 }

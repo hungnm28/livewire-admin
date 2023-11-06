@@ -1,0 +1,36 @@
+<x-lf.box.show title="Admins - Show" :$record_id>
+    <table class="table">
+        <tr>
+            <th class="stt">Id:</th>
+            <td>{{$data->id}}</td>
+        </tr>
+		<tr>
+            <th class="stt">Name:</th>
+            <td>{{$data->name}}</td>
+        </tr>
+		<tr>
+            <th class="stt">Email:</th>
+            <td>{{$data->email}}</td>
+        </tr>
+		<tr>
+            <th class="stt">Is admin:</th>
+            <td>{{$data->is_admin}}</td>
+        </tr>
+		<tr>
+            <th class="stt">Is super admin:</th>
+            <td>{{$data->is_super_admin}}</td>
+        </tr>
+        <tr>
+            <th class="stt">Roles</th>
+            <td>
+                @if($data->is_super_admin)
+                    <span class="text-green-600 font-bold">All Roles</span>
+                @else
+                    @foreach($data->roles as $role)
+                        <span class="inline-block">{{$role->label}}</span>
+                    @endforeach
+                @endif
+            </td>
+        </tr>
+    </table>
+</x-lf.box.show>

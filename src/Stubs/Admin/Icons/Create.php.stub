@@ -11,10 +11,7 @@ class Create extends Component
     public $file, $width = 24, $height = 24, $name, $file_url = "", $path, $data,$create;
 
     use WithFileUploads;
-    public function mount()
-    {
-        $this->authorize("DUMP_MY_MODULE_SLUG.settings.icons.create");
-    }
+
     protected function rules()
     {
         return [
@@ -24,6 +21,7 @@ class Create extends Component
     }
 
     public function mount(){
+        $this->authorize("DUMP_MY_MODULE_SLUG.settings.icons.create");
         $this->data  = IconSupport::getIconNames();
     }
 

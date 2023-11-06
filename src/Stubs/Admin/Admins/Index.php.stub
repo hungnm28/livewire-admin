@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Users;
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Admins;
 
 use App\Models\User;
 use Hungnm28\LivewireAdmin\Traits\WithListingTrait;
@@ -19,18 +19,21 @@ class Index extends Component
     public $fields = [
         "name" => ["status" => true, "label" => "Name"],
         "email" => ["status" => true, "label" => "Email"],
-        "created_at" => ["status" => true, "label" => "Created at"],
+        "roles" => ["status" => true, "label" => "Roles"],
+        "is_admin" => ["status" => true, "label" => "Is admin"],
+        "is_super_admin" => ["status" => true, "label" => "Is super admin"],
         "updated_at" => ["status" => true, "label" => "Updated at"],
+        "created_at" => ["status" => true, "label" => "Created at"],
     ];
 
     public function mount()
     {
-        $this->authorize("DUMP_MY_MODULE_SLUG.users");
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins");
     }
 
     public function deleteRecord()
     {
-        $this->authorize("DUMP_MY_MODULE_SLUG.users.delete");
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins.delete");
         $data = User::findOrFail($this->record_id);
         if ($data) {
             $data->delete();
@@ -41,13 +44,13 @@ class Index extends Component
 
     public function render()
     {
-        $data = User::whereIsAdmin(0)->whereIsSuperAdmin(0);
+        $data = User::whereIsAdmin(1)->with(['roles']);
         if ($this->fId > 0) {
             $data = $data->whereId($this->fId);
         }
         $data = $data->paginate(30);
 
-        return view('DUMP_MY_MODULE_SLUG::livewire.users.index', compact("data"))
-            ->layout("DUMP_MY_MODULE_SLUG::layouts.master", ['title' => "Users"]);
+        return view('DUMP_MY_MODULE_SLUG::livewire.admins.index', compact("data"))
+            ->layout("DUMP_MY_MODULE_SLUG::layouts.master", ['title' => "Admins"]);
     }
 }

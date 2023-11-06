@@ -1,0 +1,20 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Admins;
+
+use App\Models\User;
+use Livewire\Component;
+
+class Show extends Component
+{
+    use FormTrait;
+
+    public function mount(){
+        $this->authorize("DUMP_MY_MODULE_SLUG.admins");
+    }
+    public function render()
+    {
+        $data = User::with(["roles"])->findOrFail($this->record_id);
+        return view('DUMP_MY_MODULE_SLUG::livewire.admins.show', compact("data"));
+    }
+}

@@ -66,7 +66,6 @@ class MakeLayoutCommand extends Command
     {
         $this->info("Make Layout");
         $this->initModule($this->argument("module"));
-        $this->installViteConfig();
         $this->createCategories();
         $this->createMenu();
         $this->createLayoutView();
