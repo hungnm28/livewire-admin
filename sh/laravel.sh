@@ -15,6 +15,7 @@ php artisan vendor:publish --tag=modules-livewire-config
 composer require hungnm28/livewire-admin
 php artisan vendor:publish --tag=livewire-admin
 yes|php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-composer
+composer dumpautoload
+yes|php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-env
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:create-admin-module
-cd $projectname
-npm run dev
+cd "$( dirname -- "${BASH_SOURCE[0]}" )" && npm run dev

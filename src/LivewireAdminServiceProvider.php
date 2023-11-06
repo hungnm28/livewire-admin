@@ -23,6 +23,7 @@ class LivewireAdminServiceProvider extends ServiceProvider
         Commands\MakeAdmin::class,
         Commands\SetComposer::class,
         Commands\CreateAdminModuleCommand::class,
+        Commands\SetEnvCommand::class,
     ];
 
     public function register()
