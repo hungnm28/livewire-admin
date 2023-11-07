@@ -14,6 +14,8 @@ composer require mhmiton/laravel-modules-livewire
 php artisan vendor:publish --tag=modules-livewire-config
 composer require hungnm28/livewire-admin
 php artisan vendor:publish --tag=livewire-admin
+php artisan vendor:publish --tag=livewire-admin-vite --force
+php artisan vendor:publish --tag=livewire-admin-permission --force
 yes|php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-composer
 composer dumpautoload
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-env

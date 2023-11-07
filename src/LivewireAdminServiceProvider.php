@@ -58,11 +58,18 @@ class LivewireAdminServiceProvider extends ServiceProvider
             __DIR__ . '/../publishes/Casts' => app_path("Casts"),
             __DIR__ . '/../publishes/database' => database_path(),
             __DIR__ . '/../publishes/Traits' => app_path("Traits"),
-            __DIR__ . '/../publishes/Models' => app_path("Models"),
             __DIR__ . '/../publishes/lf' => base_path("resources/views/components/lf"),
             __DIR__ . '/../publishes/assets' => base_path("resources/assets"),
             __DIR__ . '/../publishes/icons/icons.svg' => public_path("assets/images/icons.svg")
         ], 'livewire-admin');
+        $this->publishes([
+            __DIR__ . '/../publishes/tailwind.config.js' => base_path('tailwind.config.js'),
+            __DIR__ . '/../publishes/vite.config.js' => base_path('vite.config.js'),
+        ], 'livewire-admin-vite');
+        $this->publishes([
+            __DIR__ . '/../publishes/Models' => app_path("Models"),
+            __DIR__ . '/../publishes/database' => database_path(),
+        ], 'livewire-admin-permission');
     }
 
 }

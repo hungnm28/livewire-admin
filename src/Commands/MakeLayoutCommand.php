@@ -80,25 +80,15 @@ class MakeLayoutCommand extends Command
 
     }
 
-
-
     private function installViteConfig()
     {
-        $pathVite = base_path("vite.config.js");
-        $arrAssets = [
-            '\'Modules/' . $this->getModuleName() ."/". $this->paths->assets . '/sass/app.scss\',',
-            '\'Modules/' . $this->getModuleName() ."/". $this->paths->assets . '/js/app.js\',',
-        ];
-        $arrModules = [
-            '\'Modules/*/**\',',
-            '\'Modules/**\',',
-            '\'Modules/***\',',
-            '\'Modules/****\',',
-        ];
-        if ($this->insertDataAfter($pathVite, '\'resources/js/app.js\',', 'Modules/' . $this->getModuleName(), $this->showNewLine(6) . implode($this->showNewLine(6), $arrAssets))) {
-            $this->insertDataAfter($pathVite, '\'app/Livewire/**\',', 'Modules/*/**', $this->showNewLine(6) . implode($this->showNewLine(6),$arrModules));
-
-        }
+        $pathSave = $this->getModulepath("/vite.config.js");
+        return $this->createFile(
+            path: $pathSave,
+            name: 'vite.config.js',
+            stub: 'Layouts/vite.config.js.stub'
+            , force: true
+        );
     }
 
     private function replaceRoute()
