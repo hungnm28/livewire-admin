@@ -77,6 +77,14 @@ class MakeLayoutCommand extends Command
         $this->replaceRoute();
         $this->createAssets();
         $this->installViteConfig();
+        $this->tailwindConfig();
+
+    }
+
+
+    private function tailwindConfig(){
+        $pathTailwind = base_path("tailwind.config.js");
+        $this->insertDataAfter($pathTailwind, '\'./resources/views/**/*.blade.php\',', './Modules/**/*.blade.php', $this->showNewLine(6) . '\'./Modules/**/*.blade.php\',');
 
     }
 
