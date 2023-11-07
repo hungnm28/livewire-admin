@@ -1,7 +1,7 @@
 # Create new project use livewire-admin
 ## Install all step
 ```sh
-  curl -o laravel.sh https://github.com/hungnm28/livewire-admin/blob/main/sh/laravel.sh && chmod 755 laravel.sh && ./laravel.sh
+  curl -o laravel.sh https://raw.githubusercontent.com/hungnm28/livewire-admin/main/sh/laravel.sh && chmod 755 laravel.sh && ./laravel.sh
 ```
 
 ## 1. Create new Laravel project
