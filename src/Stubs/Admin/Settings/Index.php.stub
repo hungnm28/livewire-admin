@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Settings;
+namespace Modules\DUMP_MY_MODULE_NAME\DUMP_MY_LIVEWIRE_NAMESPACE\Settings;
 
 use Livewire\Component;
 

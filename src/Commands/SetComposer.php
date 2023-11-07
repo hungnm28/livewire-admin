@@ -20,7 +20,7 @@ class SetComposer extends Command
             if(!isset($arrayComposer["autoload"]["psr-4"]['Modules\\'])){
                 $arrayComposer["autoload"]["psr-4"]['Modules\\'] = 'Modules/';
             }
-            file_put_contents(base_path() . "/composer.json",json_encode($arrayComposer,JSON_PRETTY_PRINT));
+            file_put_contents(base_path() . "/composer.json",json_encode($arrayComposer,JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
         }
         return Command::SUCCESS;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Admins;
+namespace Modules\DUMP_MY_MODULE_NAME\DUMP_MY_LIVEWIRE_NAMESPACE\Admins;
 
 use App\Models\User;
 use Hungnm28\LivewireAdmin\Traits\WithFormTrait;

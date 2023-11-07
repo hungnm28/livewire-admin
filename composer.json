@@ -4,8 +4,8 @@
     "type": "library",
     "require": {
         "doctrine/dbal": ">=2.3.0",
-        "nwidart/laravel-modules": ">=10.0.0",
-        "mhmiton/laravel-modules-livewire": ">=1.6.0",
+        "nwidart/laravel-modules": ">=10.0.3",
+        "mhmiton/laravel-modules-livewire": ">=2.1",
         "laravel/prompts": ">=v0.1.5"
     },
     "license": "MIT",

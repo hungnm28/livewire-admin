@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Views\Components;
+namespace Modules\DUMP_MY_MODULE_NAME\DUMP_MY_COMPONENT_NAME;
 
 use Illuminate\View\Component;
 

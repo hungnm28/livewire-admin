@@ -11,10 +11,15 @@ use function Laravel\Prompts\confirm;
 
 trait CommandTrait
 {
-    private $module, $model, $path, $pageName, $fileName;
+    private $module, $model, $path, $pageName, $fileName,$paths;
     private $reservedColumn = [
         'id', 'created_at', 'updated_at', 'deleted_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
     ];
+
+    public function __construct(){
+        parent::__construct();
+        $this->setPaths();
+    }
 
     private function initModule($name)
     {
@@ -29,6 +34,23 @@ trait CommandTrait
         $name = Str::studly($name);
         $this->path = $pre . $name;
 
+    }
+
+    private function setPaths()
+    {
+        $paths = [
+            'assets' => config("modules.paths.generator.assets.path"),
+            'views' => config("modules.paths.generator.views.path"),
+            'routes' => config("modules.paths.generator.routes.path"),
+            'controller' => config("modules.paths.generator.controller.path"),
+            'provider' => config("modules.paths.generator.provider.path"),
+            'componentView' => config("modules.paths.generator.component-view.path"),
+            'componentClass' => config("modules.paths.generator.component-class.path"),
+            'livewireClass' => config("modules-livewire.namespace"),
+            'livewireWiew' => config("modules-livewire.view"),
+        ];
+
+        $this->paths = (object)$paths;
     }
 
     private function initModel($pageName)
@@ -170,6 +192,7 @@ trait CommandTrait
         return str_replace([
             "DUMP_MY_MODULE_NAME",
             "DUMP_MY_NAMESPACE",
+            "DUMP_MY_LIVEWIRE_NAMESPACE",
             "DUMP_MY_MODEL_NAME",
             "DUMP_MY_MODULE_SLUG",
             "DUMP_MY_MODULE_HEAD_NAME",
@@ -186,6 +209,7 @@ trait CommandTrait
         ], [
             $this->getModuleName(),
             $this->getNamespace(),
+            str_replace("/","\\",$this->paths->livewireClass),
             $this->getModelName(),
             $this->getModuleSug(),
             $this->getModuleHeadName(),
@@ -332,7 +356,7 @@ trait CommandTrait
 
     private function getNamespace()
     {
-        $namespace = "Modules/" . $this->module->getName() . "/Livewire/" . $this->path;
+        $namespace = "Modules/" . $this->module->getName() . "/".$this->paths->livewireClass."/" . $this->path;
         $namespace = str_replace("/", "\\", $namespace);
         return $namespace;
     }
@@ -344,7 +368,7 @@ trait CommandTrait
 
     private function getClassFile($name)
     {
-        return $this->getModulepath("Livewire/$this->path/$name");
+        return $this->getModulepath($this->paths->livewireClass."/$this->path/$name");
     }
 
     private function getViewFile($name)
@@ -354,7 +378,7 @@ trait CommandTrait
             $data[] = $this->getSnakeString($path);
         }
         $path = implode("/", $data);
-        return $this->getModulepath("Resources/views/livewire/$path/$name");
+        return $this->getModulepath($this->paths->livewireClass."/$path/$name");
     }
 
     private function getModulepath($path = "")

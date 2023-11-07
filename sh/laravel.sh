@@ -18,4 +18,4 @@ yes|php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-composer
 composer dumpautoload
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:set-env
 php "$( dirname -- "${BASH_SOURCE[0]}" )/artisan" la:create-admin-module
-cd "$( dirname -- "${BASH_SOURCE[0]}" )" && npm run dev
+cd "$( dirname -- "${BASH_SOURCE[0]}" )" && npm install -D sass  && npm run dev

@@ -18,6 +18,7 @@ class CreateUser extends Command
 
     public function handle()
     {
+        $this->call('migrate');
         $data['email'] = text("Email");
         $data['password'] = password("Password");
         $data['name'] = text("Name");

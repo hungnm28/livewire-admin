@@ -56,7 +56,7 @@ class LivewireAdminServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../publishes/Casts' => app_path("Casts"),
-            __DIR__ . '/../publishes/database' => database_path("migrations"),
+            __DIR__ . '/../publishes/database' => database_path(),
             __DIR__ . '/../publishes/Traits' => app_path("Traits"),
             __DIR__ . '/../publishes/Models' => app_path("Models"),
             __DIR__ . '/../publishes/lf' => base_path("resources/views/components/lf"),

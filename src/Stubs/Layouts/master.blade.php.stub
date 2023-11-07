@@ -7,7 +7,7 @@
 
     <title>{{ $title }}</title>
     <!-- Scripts -->
-    @vite(['Modules/DUMP_MY_MODULE_NAME/Resources/assets/sass/app.scss', 'Modules/DUMP_MY_MODULE_NAME/Resources/assets/js/app.js'])
+    @vite(['Modules/DUMP_MY_MODULE_NAME/DUMP_MY_ASSETS/sass/app.scss', 'Modules/DUMP_MY_MODULE_NAME/DUMP_MY_ASSETS/js/app.js'])
     @livewireStyles
 </head>
 <body>

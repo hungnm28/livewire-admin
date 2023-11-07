@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Roles;
+namespace Modules\DUMP_MY_MODULE_NAME\DUMP_MY_LIVEWIRE_NAMESPACE\Roles;
 
 use App\Models\Role;
 use Hungnm28\LivewireAdmin\Traits\WithListingTrait;

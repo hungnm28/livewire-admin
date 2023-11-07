@@ -60,6 +60,7 @@ class MakeLayoutCommand extends Command
         'slate' => 'Slate'
     ];
 
+
     protected $description = 'Make Layout';
 
     public function handle()
@@ -71,7 +72,7 @@ class MakeLayoutCommand extends Command
         $this->createLayoutView();
         $this->createLayoutClass();
         $this->createIndexFile();
-        $this->replaceProvider();
+        // $this->replaceProvider();
         $this->replaceRouteProvider();
         $this->replaceRoute();
         $this->createAssets();
@@ -79,22 +80,30 @@ class MakeLayoutCommand extends Command
 
     }
 
+
+
     private function installViteConfig()
     {
         $pathVite = base_path("vite.config.js");
         $arrAssets = [
-            '\'Modules/' . $this->getModuleName() . '/Resources/assets/sass/app.scss\',',
-            '\'Modules/' . $this->getModuleName() . '/Resources/assets/js/app.js\',',
+            '\'Modules/' . $this->getModuleName() ."/". $this->paths->assets . '/sass/app.scss\',',
+            '\'Modules/' . $this->getModuleName() ."/". $this->paths->assets . '/js/app.js\',',
         ];
-        $this->insertDataAfter($pathVite, '\'resources/js/app.js\',', 'Modules/' . $this->getModuleName(), $this->showNewLine(6) . implode($this->showNewLine(6), $arrAssets));
-        sleep(1);
-        $this->insertDataAfter($pathVite, '\'app/Livewire/**\',', 'Modules/*/**', $this->showNewLine(6) . '\'Modules/*/**\',');
+        $arrModules = [
+            '\'Modules/*/**\',',
+            '\'Modules/**\',',
+            '\'Modules/***\',',
+            '\'Modules/****\',',
+        ];
+        if ($this->insertDataAfter($pathVite, '\'resources/js/app.js\',', 'Modules/' . $this->getModuleName(), $this->showNewLine(6) . implode($this->showNewLine(6), $arrAssets))) {
+            $this->insertDataAfter($pathVite, '\'app/Livewire/**\',', 'Modules/*/**', $this->showNewLine(6) . implode($this->showNewLine(6),$arrModules));
 
+        }
     }
 
     private function replaceRoute()
     {
-        $pathSave = $this->getModulepath("Routes/web.php");
+        $pathSave = $this->getModulepath($this->paths->routes . "/web.php");
         return $this->createFile(
             path: $pathSave,
             name: 'web.php',
@@ -106,11 +115,14 @@ class MakeLayoutCommand extends Command
     private function replaceRouteProvider()
     {
 
-        $pathSave = $this->getModulepath("Providers/RouteServiceProvider.php");
+        $pathSave = $this->getModulepath($this->paths->provider . "/RouteServiceProvider.php");
         return $this->createFile(
             path: $pathSave,
             name: 'RouteServiceProvider.php',
             stub: 'Providers/RouteServiceProvider.php.stub'
+            ,data: [
+            "DUMP_MY_PROVIDER"=>str_replace("/","\\",$this->paths->provider)
+        ]
             , force: true
         );
     }
@@ -118,7 +130,7 @@ class MakeLayoutCommand extends Command
     private function replaceProvider()
     {
 
-        $pathSave = $this->getModulepath("Providers/" . $this->getModuleName() . "ServiceProvider.php");
+        $pathSave = $this->getModulepath($this->paths->provider . "/" . $this->getModuleName() . "ServiceProvider.php");
         return $this->createFile(
             path: $pathSave,
             name: 'ServiceProvider.php',
@@ -129,7 +141,7 @@ class MakeLayoutCommand extends Command
 
     private function createIndexFile()
     {
-        $pathSave = $this->getModulepath("Resources/views/index.blade.php");
+        $pathSave = $this->getModulepath($this->paths->views . "/index.blade.php");
         return $this->createFile(
             path: $pathSave,
             name: 'LayoutMaster.php',
@@ -140,18 +152,21 @@ class MakeLayoutCommand extends Command
 
     private function createLayoutClass()
     {
-        $pathSave = $this->getModulepath("Views/Components/LayoutMaster.php");
+        $pathSave = $this->getModulepath($this->paths->componentClass . "/LayoutMaster.php");
         return $this->createFile(
             path: $pathSave,
             name: 'LayoutMaster.php',
             stub: 'Layouts/LayoutMaster.php.stub'
+            , data: [
+            "DUMP_MY_COMPONENT_NAME" => str_replace("/", "\\", $this->paths->componentClass)
+        ]
             , force: true
         );
     }
 
     private function createLayoutView()
     {
-        $pathSave = $this->getModulepath("Resources/views/layouts/master.blade.php");
+        $pathSave = $this->getModulepath($this->paths->views . "/layouts/master.blade.php");
         $themesSelect = [];
         foreach ($this->themes as $k => $val) {
             $themesSelect[$k] = Str::headline($k);
@@ -169,6 +184,7 @@ class MakeLayoutCommand extends Command
             name: 'master.blade.php',
             data: [
                 'DUMP_MY_CSS_ROOT' => str_replace(';', ';' . $this->showNewLine(4), $theme)
+                ,'DUMP_MY_ASSETS'=>$this->paths->assets
             ],
             stub: 'Layouts/master.blade.php.stub'
             , force: true
@@ -177,13 +193,13 @@ class MakeLayoutCommand extends Command
 
     private function createCategories()
     {
-        $pathSave = $this->getModulepath("Resources/views/components/menu/categories.blade.php");
+        $pathSave = $this->getModulepath($this->paths->componentView . "/menu/categories.blade.php");
         $this->writeFile($pathSave, '<ul class="menu"></ul>', true);
     }
 
     private function createMenu()
     {
-        $pathSave = $this->getModulepath("Resources/views/components/menu/index.blade.php");
+        $pathSave = $this->getModulepath($this->paths->componentView . "/menu/index.blade.php");
         return $this->createFile(
             path: $pathSave,
             name: 'index.blade.php',
@@ -196,7 +212,7 @@ class MakeLayoutCommand extends Command
 
     private function createAssets()
     {
-        $pathSave = $this->getModulepath("Resources/assets/js/app.js");
+        $pathSave = $this->getModulepath($this->paths->assets . "/js/app.js");
         $this->createFile(
             path: $pathSave,
             name: 'app.js',
@@ -204,7 +220,7 @@ class MakeLayoutCommand extends Command
             , force: true
         );
 
-        $pathSave = $this->getModulepath("Resources/assets/sass/app.scss");
+        $pathSave = $this->getModulepath($this->paths->assets . "/sass/app.scss");
         $this->createFile(
             path: $pathSave,
             name: 'app.scss',
@@ -212,7 +228,7 @@ class MakeLayoutCommand extends Command
             , force: true
         );
 
-        $pathSave = $this->getModulepath("Resources/assets/sass/_layout.scss");
+        $pathSave = $this->getModulepath($this->paths->assets . "/sass/_layout.scss");
         $this->createFile(
             path: $pathSave,
             name: '_layout.scss',

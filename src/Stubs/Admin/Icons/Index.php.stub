@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\DUMP_MY_MODULE_NAME\Livewire\Icons;
+namespace Modules\DUMP_MY_MODULE_NAME\DUMP_MY_LIVEWIRE_NAMESPACE\Icons;
 
 use Hungnm28\LivewireAdmin\Traits\WithListingTrait;
 use Livewire\Component;
