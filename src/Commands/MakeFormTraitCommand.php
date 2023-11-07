@@ -30,8 +30,9 @@ class MakeFormTraitCommand extends Command
         $listFields = $this->getListFields();
         $setFields = $this->getSetFields();
         $fieldData = $this->getFieldDatas();
+
         return $this->createFile($pathSave, 'FormTrait.php', [
-            "DUMP_MY_FIELDS" => implode(", ", $listFields),
+            "DUMP_MY_FIELDS" => implode(", ", array_merge_recursive(['$record_id'],$listFields)),
             "DUMP_MY_RULES" => implode("," . $this->showNewLine(5), $rules),
             "DUMP_MY_SET_FIELDS" => implode($this->showNewLine(4), $setFields),
             "DUMP_MY_SET_DATA" => implode("," . $this->showNewLine(5), $fieldData),

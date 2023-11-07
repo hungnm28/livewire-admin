@@ -48,6 +48,7 @@ class ModelCommand extends Command
         $modelGenerator = new ModelGenerator($name);
         $fields = $modelGenerator->getFields();
         $fieldNames = $this->getFieldNames($fields);
+        $listFields = $this->getFieldNames($fields,1);
         $casts = $this->getCasts($fields);
         $tableName = $modelGenerator->getTableName();
         $relationship = '';
@@ -60,6 +61,7 @@ class ModelCommand extends Command
             "DUMP_MY_CLASS_NAME",
             "DUMP_MY_TABLE",
             "DUMP_MY_FIELDS",
+            "DUMP_MY_LIST_FIELDS",
             "DUMP_MY_RELATIONSHIP",
             "DUMP_MY_CASTS",
         ],[
@@ -67,6 +69,7 @@ class ModelCommand extends Command
             $name,
             $tableName,
             implode(", ",$fieldNames),
+            implode(", ",$listFields),
             $relationship,
             implode(", ".$this->showNewLine(4),$casts['casts'])
 
@@ -111,13 +114,16 @@ class ModelCommand extends Command
     }
 
 
-    private function getFieldNames($fields)
+    private function getFieldNames($fields,$full=0)
     {
         $rt = [];
         foreach ($fields as $field => $val) {
-            if (!$this->checkReservedField($field)) {
-                $rt[] = "\"$field\"";
+            if(!$this->checkIgnoreField($field)){
+                if (!$this->checkReservedField($field) || $full) {
+                    $rt[] = "\"$field\"";
+                }
             }
+
         }
         return $rt;
     }

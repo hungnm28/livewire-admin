@@ -14,7 +14,7 @@ class DUMP_MY_CLASS_NAME extends Model
 
     protected $fillable = [DUMP_MY_FIELDS];
 
-    public static $listFields = ["id", "created_at", "updated_at", DUMP_MY_FIELDS];
+    public static $listFields = [DUMP_MY_LIST_FIELDS];
     DUMP_MY_RELATIONSHIP
     protected $casts = [
         DUMP_MY_CASTS

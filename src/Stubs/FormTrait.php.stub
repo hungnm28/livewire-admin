@@ -11,7 +11,7 @@ trait FormTrait
     use WithFormTrait;
     use AuthorizesRequests;
 
-    public $record_id, DUMP_MY_FIELDS;
+    public DUMP_MY_FIELDS;
 
     protected function rules()
     {

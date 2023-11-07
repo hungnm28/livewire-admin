@@ -13,8 +13,9 @@ trait CommandTrait
 {
     private $module, $model, $path, $pageName, $fileName,$paths;
     private $reservedColumn = [
-        'id', 'created_at', 'updated_at', 'deleted_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
+        'id', 'created_at', 'updated_at', 'deleted_at'
     ];
+    private $ignoreColumn = ['remember_token', 'two_factor_recovery_codes', 'two_factor_secret'];
 
     public function __construct(){
         parent::__construct();
@@ -47,7 +48,7 @@ trait CommandTrait
             'componentView' => config("modules.paths.generator.component-view.path"),
             'componentClass' => config("modules.paths.generator.component-class.path"),
             'livewireClass' => config("modules-livewire.namespace"),
-            'livewireWiew' => config("modules-livewire.view"),
+            'livewireView' => config("modules-livewire.view"),
         ];
 
         $this->paths = (object)$paths;
@@ -258,6 +259,10 @@ trait CommandTrait
     {
         return in_array($name, $this->reservedColumn);
     }
+        private function checkIgnoreField($name)
+    {
+        return in_array($name, $this->ignoreColumn);
+    }
 
     private function ensureDirectoryExists($path)
     {
@@ -378,7 +383,7 @@ trait CommandTrait
             $data[] = $this->getSnakeString($path);
         }
         $path = implode("/", $data);
-        return $this->getModulepath($this->paths->livewireClass."/$path/$name");
+        return $this->getModulepath($this->paths->livewireView."/$path/$name");
     }
 
     private function getModulepath($path = "")
