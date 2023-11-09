@@ -2,7 +2,7 @@
 @php
     $icons = \Hungnm28\LivewireAdmin\Supports\IconSupport::getIconNames();
 @endphp
-<x-lf.form.field :name="$name" :label="$label" :class="$class">
+<x-lf.form.field :$name :$label :$class>
     <div x-data="{open : false}" class="form-icon">
         <label @click="open=!open" class="btn-primary">@if($val) <span class="icon">{!! lfIcon($val) !!}</span> <span class="text">{{$val}}</span> @else Icon @endif</label>
         <div x-show="open" @click.away="open = false" style="display: none" class="box-icons">

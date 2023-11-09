@@ -2,7 +2,7 @@
     <x-lf.filter>
         <x-lf.form.input name="fId" class="sm w-1/3" placeholder="id..."/>
     </x-lf.filter>
-    <x-lf.table>
+    <table class="table">
         <tr>
             <th class="stt">#</th>
             <x-lf.table.label :$fields name="name">Name</x-lf.table.label>
@@ -35,7 +35,7 @@
                 </td>
             </tr>
         @endforeach
-    </x-lf.table>
+    </table>
 
     @can('DUMP_MY_MODULE_SLUG.roles.show')
         @if($show && $record_id>0)

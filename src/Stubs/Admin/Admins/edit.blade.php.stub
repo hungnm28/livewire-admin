@@ -1,0 +1,23 @@
+<x-lf.box.edit title="Admins - Edit">
+    @if($user)
+        <div class="w-full block">
+            <table class="table">
+                <tr>
+                    <th class="stt"># id:</th>
+                    <th>{{$user->id}}</th>
+                </tr>
+                <tr>
+                    <th class="stt">Email:</th>
+                    <th>{{$user->email}}</th>
+                </tr>
+                <tr>
+                    <th class="stt">Name:</th>
+                    <th>{{$user->name}}</th>
+                </tr>
+            </table>
+        </div>
+    @endif
+    <x-lf.form.toggle name="is_admin" label="Is admin" :checked="$is_admin" />
+    <x-lf.form.toggle name="is_super_admin" label="Is super admin" :checked="$is_super_admin" />
+    <x-lf.form.checkbox name="roles" label="Roles" :params="$allRoles"/>
+</x-lf.box.edit>

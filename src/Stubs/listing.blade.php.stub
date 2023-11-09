@@ -2,7 +2,7 @@
     <x-lf.filter>
         <x-lf.form.input name="fId" class="sm w-1/3" placeholder="id..."/>
     </x-lf.filter>
-    <x-lf.table>
+    <table class="table">
         <tr>
             <th class="stt">#</th>
             DUMP_MY_TABLE_LABELS
@@ -27,7 +27,7 @@
                 </td>
             </tr>
         @endforeach
-    </x-lf.table>
+    </table>
     @can('DUMP_MY_SHOW_PERMISSION')
         @if($show && $record_id>0)
             <x-lf.modal class="sm:max-w-2xl" wire:model="show">

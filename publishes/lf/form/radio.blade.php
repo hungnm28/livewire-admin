@@ -1,4 +1,3 @@
-
 @props(['name','label'=>null,'class'=>'class','params'=>[]])
 <x-lf.form.field :name="$name" :label="$label" :class="$class">
     <div class="checkboxs">
