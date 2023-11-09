@@ -36,7 +36,7 @@ class MakeEditCommand extends Command
     private function createView()
     {
         $pathSave = $this->getViewFile("edit.blade.php");
-        $forms = $this->generateForm();
+        $forms = $this->generateForm('edit');
         return $this->createFile(
             path: $pathSave
             , name: "edit.blade.php"

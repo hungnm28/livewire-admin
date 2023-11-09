@@ -14,6 +14,9 @@ class Show extends Component
     }
     public function render()
     {
+        if($this->record_id <=0){
+        return '<div>EMPTY</div>';
+        }
         $data = DUMP_MY_MODEL_NAME::findOrFail($this->record_id);
         return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.show', compact("data"));
     }

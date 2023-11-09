@@ -160,7 +160,7 @@ trait CommandTrait
         return $rt;
     }
 
-    private function generateForm()
+    private function generateForm($page=null)
     {
         $fields = $this->getFields();
         $rt = [];
@@ -169,16 +169,16 @@ trait CommandTrait
                 switch ($item->type) {
                     case "text":
                     case "long-text":
-                        $rt[$field] = '<x-lf.form.textarea name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
+                        $rt[$field] = '<x-lf.form.textarea name="' . $item->name . '" label="' . $item->label . '" id="'.md5($page."-". $item->name).'" placeholder="' . $item->label . ' ..."/>';
                         break;
                     case "boolean":
-                        $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '" label="' . $item->label . '"/>';
+                        $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '" id="'.md5($page."-". $item->name).'" label="' . $item->label . '"/>';
                         break;
                     case "json":
-                        $rt[$field] = '<x-lf.form.array name="' . $item->name . '" label="' . $item->label . '"/>';
+                        $rt[$field] = '<x-lf.form.array name="' . $item->name . '" id="'.md5($page."-". $item->name).'" label="' . $item->label . '"/>';
                         break;
                     default:
-                        $rt[$field] = '<x-lf.form.input type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
+                        $rt[$field] = '<x-lf.form.input type="' . $item->type . '" id="'.md5($page."-". $item->name).'" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..."/>';
                         break;
                 }
             }

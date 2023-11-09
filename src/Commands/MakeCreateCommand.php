@@ -35,7 +35,7 @@ class MakeCreateCommand extends Command
     private function createView()
     {
         $pathSave = $this->getViewFile("create.blade.php");
-        $forms = $this->generateForm();
+        $forms = $this->generateForm('create');
         return $this->createFile(
             path: $pathSave
             , name: "create.blade.php"
