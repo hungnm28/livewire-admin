@@ -10,7 +10,7 @@ class Create extends Component
     use FormTrait;
 
     public $add_method = false;
-
+    public $create = true;
     public function mount()
     {
         $this->authorize("DUMP_MY_MODULE_SLUG.permissions.create");
@@ -25,8 +25,9 @@ class Create extends Component
             $this->resetForm();
             $this->pushNotification("success", "Created!");
         }
-
-        $this->dispatch("resetModal");
+        if(!$this->create){
+            $this->dispatch("resetModal");
+        }
     }
 
     public function render()

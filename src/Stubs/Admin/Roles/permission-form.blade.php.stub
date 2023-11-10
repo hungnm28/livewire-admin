@@ -1,7 +1,7 @@
-<ul class="permissions-form level-{{$level}}">
+<ul class="show-permissions lv-{{$level}}">
     @foreach($data as $k => $label)
         <li class="item">
-            <label>
+            <label class="item-content">
                 <input type="checkbox"  wire:model.live="permissions.{{$k}}" value="{{$k}}">
                 <span>{{$label}}</span>
             </label>

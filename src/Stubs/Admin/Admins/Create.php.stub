@@ -10,6 +10,7 @@ class Create extends Component
 {
     use FormTrait;
     public $roles = [];
+    public $create = true;
     public function mount()
     {
         $this->authorize("DUMP_MY_MODULE_SLUG.admins.create");
@@ -39,7 +40,9 @@ class Create extends Component
             $data->roles()->attach($this->roles);
         }
         $this->resetForm();
-        $this->dispatch("resetModal");
+        if(!$this->create){
+            $this->dispatch("resetModal");
+        }
     }
 
     public function render()

@@ -26,6 +26,9 @@ class Show extends Component
 
     public function render()
     {
+        if($this->record_id <= 0){
+            return '<div></div>';
+        }
         $data = Role::with(["permissions"])->findOrFail($this->record_id);
         return view('DUMP_MY_MODULE_SLUG::livewire.roles.show', compact("data"));
     }

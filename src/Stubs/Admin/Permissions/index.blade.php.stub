@@ -20,35 +20,27 @@
     </table>
 
     @can('DUMP_MY_MODULE_SLUG.permissions.show')
-        @if($show && $record_id>0)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="show">
-                <livewire:DUMP_MY_MODULE_SLUG::permissions.show :record_id="$record_id" :key="'show-' . $record_id"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-2xl" wire:model="show">
+            <livewire:DUMP_MY_MODULE_SLUG::permissions.show :record_id="$record_id" :key="'show-' . $record_id"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.permissions.edit')
-        @if($edit && $record_id>0)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="edit">
-                <livewire:DUMP_MY_MODULE_SLUG::permissions.edit :record_id="$record_id" :key="'edit-' . $record_id"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-2xl" wire:model="edit">
+            <livewire:DUMP_MY_MODULE_SLUG::permissions.edit :record_id="$record_id" :key="'edit-' . $record_id"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.permissions.delete')
-        @if($delete && $record_id >0)
-            <x-lf.modal class="sm:max-w-sm" wire:model="delete">
-                <x-lf.box.delete title="Permissions - Delete"/>
-            </x-lf.modal>
-        @endif
+         <x-lf.modal class="sm:max-w-sm" wire:model="delete">
+            <x-lf.box.delete title="Permissions - Delete"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.permissions.create')
-        @if($create)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="create">
-                <livewire:DUMP_MY_MODULE_SLUG::permissions.create key="create"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-2xl" wire:model="create">
+            <livewire:DUMP_MY_MODULE_SLUG::permissions.create key="create"/>
+        </x-lf.modal>
     @endcan
 
     <x-slot:footer>

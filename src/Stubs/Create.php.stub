@@ -8,6 +8,7 @@ use Livewire\Component;
 class Create extends Component
 {
     use FormTrait;
+    public $create = true;
     public function mount(){
         $this->authorize("DUMP_MY_CREATE_PERMISSION");
     }
@@ -19,8 +20,9 @@ class Create extends Component
             $this->resetForm();
             $this->pushNotification("success","Created!");
         }
-
-        $this->dispatch("resetModal");
+        if(!$this->create){
+            $this->dispatch("resetModal");
+        }
     }
 
     public function render()

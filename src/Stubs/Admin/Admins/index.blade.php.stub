@@ -52,35 +52,27 @@
         @endforeach
     </table>
     @can('DUMP_MY_MODULE_SLUG.admins.show')
-        @if($show && $record_id>0)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="show">
-                <livewire:admin::admins.show :record_id="$record_id" :key="'show-' . $record_id"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-2xl" wire:model="show">
+            <livewire:admin::admins.show :record_id="$record_id" :key="'show-' . $record_id"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.admins.edit')
-        @if($edit && $record_id>0)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="edit">
-                <livewire:admin::admins.edit :record_id="$record_id" :key="'edit-' . $record_id"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-2xl" wire:model="edit">
+            <livewire:admin::admins.edit :record_id="$record_id" :key="'edit-' . $record_id"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.admins.delete')
-        @if($delete && $record_id >0)
-            <x-lf.modal class="sm:max-w-sm" wire:model="delete">
-                <x-lf.box.delete title="Admins - Delete"/>
-            </x-lf.modal>
-        @endif
+        <x-lf.modal class="sm:max-w-sm" wire:model="delete">
+            <x-lf.box.delete title="Admins - Delete"/>
+        </x-lf.modal>
     @endcan
 
     @can('DUMP_MY_MODULE_SLUG.admins.create')
-        @if($create)
-            <x-lf.modal class="sm:max-w-2xl" wire:model="create">
-                <livewire:admin::admins.create key="create"/>
-            </x-lf.modal>
-        @endif
+       <x-lf.modal class="sm:max-w-2xl" wire:model="create">
+           <livewire:admin::admins.create key="create" />
+       </x-lf.modal>
     @endcan
 
     <x-slot:tools>

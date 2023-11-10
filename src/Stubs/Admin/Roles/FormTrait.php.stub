@@ -69,6 +69,8 @@ trait FormTrait
             foreach ($data->permissions as $per) {
                 $this->permissions[$per->id] = true;
             }
+        }else{
+            $this->permissions = [];
         }
 
     }

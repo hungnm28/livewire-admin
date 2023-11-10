@@ -15,17 +15,12 @@
         {{$this->showTree($data)}}
     </table>
 
-    @if($delete && $record_id !="")
-        <x-lf.modal class="sm:max-w-sm" wire:model="delete">
-            <x-lf.box.delete title="Menus - Delete" />
-        </x-lf.modal>
-    @endif
-
-    @if($create)
-        <x-lf.modal wire:model="create" class="sm:max-w-md">
-            <livewire:DUMP_MY_MODULE_SLUG::menus.create key="create"/>
-        </x-lf.modal>
-    @endif
+    <x-lf.modal class="sm:max-w-sm" wire:model="delete">
+        <x-lf.box.delete title="Menus - Delete" />
+    </x-lf.modal>
+    <x-lf.modal wire:model="create" class="sm:max-w-md">
+        <livewire:DUMP_MY_MODULE_SLUG::menus.create key="create"/>
+    </x-lf.modal>
 
     <x-slot:tools>
         <span class="h-btn" title="Add" wire:click="modalCreate">{!! lfIcon("add") !!}</span>

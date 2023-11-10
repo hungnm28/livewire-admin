@@ -8,8 +8,8 @@ use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    public $file, $width = 24, $height = 24, $name, $file_url = "", $path, $data,$create;
-
+    public $file, $width = 24, $height = 24, $name, $file_url = "", $path, $data;
+    public $create = true;
     use WithFileUploads;
 
     protected function rules()
@@ -46,7 +46,9 @@ class Create extends Component
         }
         $this->validate();
         IconSupport::addIcon($this->name,$this->path,$this->width,$this->height);
-        $this->dispatch("resetModal");
+        if(!$this->create){
+            $this->dispatch("resetModal");
+        }
     }
 
     public function render()

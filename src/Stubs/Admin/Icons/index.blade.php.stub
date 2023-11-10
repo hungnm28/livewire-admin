@@ -8,11 +8,9 @@
         @endforeach
         {{$create}}
     </div>
-    @if($create)
-        <x-lf.modal class="sm:max-w-2xl" wire:model="create">
-            <livewire:DUMP_MY_MODULE_SLUG::icons.create key="create" wire:model="create" />
-        </x-lf.modal>
-    @endif
+    <x-lf.modal class="sm:max-w-2xl" wire:model="create">
+        <livewire:DUMP_MY_MODULE_SLUG::icons.create key="create" wire:model="create" />
+    </x-lf.modal>
     <x-slot:tools>
         <span class="h-btn" title="Add" wire:click="modalCreate">{!! lfIcon("add") !!}</span>
     </x-slot:tools>

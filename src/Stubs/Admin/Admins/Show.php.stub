@@ -14,6 +14,9 @@ class Show extends Component
     }
     public function render()
     {
+        if($this->record_id <= 0){
+            return '<div></div>';
+        }
         $data = User::with(["roles"])->findOrFail($this->record_id);
         return view('DUMP_MY_MODULE_SLUG::livewire.admins.show', compact("data"));
     }
