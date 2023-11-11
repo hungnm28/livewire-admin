@@ -9,9 +9,9 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-    public $fId;
     use WithListingTrait;
     use WithPagination;
+    public $fId;
     public $fields = [
        "name" => ["status" => true, "label" => "Name"],
 		"label" => ["status" => true, "label" => "Label"],

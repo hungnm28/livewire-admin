@@ -11,9 +11,9 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use AuthorizesRequests;
-    public $fId;
     use WithListingTrait;
     use WithPagination;
+    public $fId;
 
     public $fields = [
         DUMP_MY_ARR_FIELDS
