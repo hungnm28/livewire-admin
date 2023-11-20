@@ -87,6 +87,23 @@
             @apply py-0.5 px-1 rounded-sm;
         }
     }
+    &.form-json{
+        .params{
+            @apply block;
+            .item{
+                @apply w-full flex;
+                .value{
+                    @apply p-1 items-center inline-block font-medium;
+                }
+                .key{
+                    @apply p-1;
+                }
+            }
+        }
+        .form-group{
+            @apply space-x-2 mt-2;
+        }
+    }
 }
 .form-group{
     @apply w-full flex;

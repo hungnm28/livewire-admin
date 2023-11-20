@@ -175,7 +175,7 @@ trait CommandTrait
                         $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '"  label="' . $item->label . '" :checked="$'.$item->name.' == 1"  id="'.md5($page."-". $item->name).'" />';
                         break;
                     case "json":
-                        $rt[$field] = '<x-lf.form.array name="' . $item->name . '" label="' . $item->label . '" id="'.md5($page."-". $item->name).'"/>';
+                        $rt[$field] = '<x-lf.form.json type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" :data="$'.$item->name.'" id="'.md5($page."-". $item->name).'"/>';
                         break;
                     default:
                         $rt[$field] = '<x-lf.form.input type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..." id="'.md5($page."-". $item->name).'" />';
