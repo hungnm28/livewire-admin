@@ -4,11 +4,12 @@ namespace Hungnm28\LivewireAdmin\Traits;
 
 trait WithListingTrait
 {
-    public $show, $edit, $create, $delete, $record_id;
+    public $show, $edit, $create, $delete, $record_id, $render=false;
 
     public function __construct()
     {
         $this->listeners[] = "resetModal";
+        $this->listeners[] = "reRender";
     }
 
     public function modalCreate()
@@ -55,5 +56,8 @@ trait WithListingTrait
     public function pushNotification($type, $message)
     {
         $this->dispatch("toast", compact('type', 'message'));
+    }
+    public function reRender(){
+        $this->render = !$this->render;
     }
 }

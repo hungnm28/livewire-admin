@@ -25,6 +25,7 @@ class Create extends Component
         if(!$this->create){
             $this->dispatch("resetModal");
         }
+        $this->dispatch("reRender");
     }
 
     public function render()

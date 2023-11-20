@@ -22,6 +22,8 @@ class Create extends Component
         $user = User::whereEmail($this->email)->first();
         if ($user) {
             $this->record_id = $user->id;
+        }else{
+            $this->dispatch("reRender");
         }
     }
 

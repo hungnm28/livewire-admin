@@ -48,7 +48,9 @@ class Create extends Component
         IconSupport::addIcon($this->name,$this->path,$this->width,$this->height);
         if(!$this->create){
             $this->dispatch("resetModal");
-        }
+        }else{
+             $this->dispatch("reRender");
+         }
     }
 
     public function render()

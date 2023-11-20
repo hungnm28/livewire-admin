@@ -22,6 +22,8 @@ class Create extends Component
         }
         if(!$this->create){
             $this->dispatch("resetModal");
+        }else{
+            $this->dispatch("reRender");
         }
     }
 
