@@ -2,6 +2,9 @@
 
 namespace Hungnm28\LivewireAdmin\Traits;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+
 trait WithFormTrait
 {
 
@@ -15,10 +18,16 @@ trait WithFormTrait
 
     public function resetForm()
     {
-
         $this->setFields();
     }
 
+    public function jsonDelete($name,$key){
+        Arr::forget($this->$name,$key);
+    }
+    public function jsonAdd($name,$key,$value){
+        $key = Str::slug($key);
+        $this->$name[$key] = $value;
+    }
     public function pushNotification($type, $message)
     {
         $this->dispatch("toast", compact('type', 'message'));
