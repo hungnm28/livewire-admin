@@ -1,4 +1,4 @@
-@props(['name','label'=>null,'class'=>'class','params'=>[]])
+@props(['name','label'=>null,'class'=>'','params'=>[]])
 <x-lf.form.field :name="$name" :label="$label" :class="$class">
     <div class="checkboxs">
         @foreach($params as $val => $title)
