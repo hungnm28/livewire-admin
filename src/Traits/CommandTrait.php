@@ -200,6 +200,7 @@ trait CommandTrait
             "DUMP_MY_MODULE_LOWER_NAME",
             "DUMP_MY_DOT_PAGE",
             "DUMP_MY_PAGE_NAME",
+            "DUMP_MY_PAGE_SLUG_NAME",
             "DUMP_MY_PAGE_LOWER_NAME",
             "DUMP_MY_CREATE_PERMISSION",
             "DUMP_MY_EDIT_PERMISSION",
@@ -217,6 +218,7 @@ trait CommandTrait
             $this->getModuleLowerName(),
             $this->getDotPath(),
             $this->getHeadline($this->path),
+            $this->getPageSlug(),
             $this->getPageLowerName(),
             $this->getPermissionName("create"),
             $this->getPermissionName("edit"),
@@ -281,6 +283,11 @@ trait CommandTrait
         $str = Str::replace("/", " ", $str);
         $str = Str::snake($str, "-");
         return Str::headline($str);
+    }
+
+    private function getPageSlug(){
+        $name = Str::afterLast($this->path,".");
+        return $this->getSnakeString($name);
     }
 
     private function getPageLowerName()
