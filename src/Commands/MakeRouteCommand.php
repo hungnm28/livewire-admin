@@ -5,6 +5,7 @@ namespace Hungnm28\LivewireAdmin\Commands;
 use Hungnm28\LivewireAdmin\Traits\CommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use function Laravel\Prompts\select;
 
 class MakeRouteCommand extends Command
 {
@@ -31,7 +32,17 @@ class MakeRouteCommand extends Command
             return false;
         }
         $routes = file_get_contents($pathSave);
-        $route = $this->getStub("route.php.stub");
+        $type = select(label: "Select type Route:",
+            options: ['single' => "Single", 'group' => 'group'], default: 'single'
+        );
+        switch ($type) {
+            case 'group':
+                $stubName = "route-group.php.stub";
+                break;
+            default:
+                $stubName = "route.php.stub";
+        }
+        $route = $this->getStub($stubName);
         $route = $this->replaceStub($route);
         if (!Str::contains($routes, '->name(".' . $this->getPageLowerName() . '")')) {
            file_put_contents($pathSave,$route,FILE_APPEND);

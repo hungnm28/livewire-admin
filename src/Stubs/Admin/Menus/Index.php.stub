@@ -10,6 +10,7 @@ use Nwidart\Modules\Facades\Module;
 class Index extends Component
 {
     public $module = "DUMP_MY_MODULE_SLUG";
+    protected $queryString=["module"];
     use WithListingTrait;
 
     public function __construct()

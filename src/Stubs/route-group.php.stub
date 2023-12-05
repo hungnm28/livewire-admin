@@ -1,0 +1,3 @@
+Route::prefix("DUMP_MY_PAGE_SLUG_NAME")->name(".DUMP_MY_PAGE_SLUG_NAME")->group(function (){
+    Route::get('/', DUMP_MY_NAMESPACE\Index::class);
+});
