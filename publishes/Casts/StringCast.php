@@ -32,6 +32,9 @@ class StringCast implements CastsAttributes
     public function set($model, string $key, $value, array $attributes)
     {
         $value = $this->removeScript($value);
+        $value = $this->removeHTML($value);
+        $value = $this->removeDoubleSpace($value);
+        $value = trim($value);
         return $value;
     }
     private function removeScript($string)
@@ -55,5 +58,12 @@ class StringCast implements CastsAttributes
 
 
         return $string;
+    }
+
+    function removeDoubleSpace($input)
+    {
+        $input = str_replace('&nbsp;', ' ', $input);
+        $input =preg_replace('/\s\s+/', ' ',$input);
+        return $input;
     }
 }

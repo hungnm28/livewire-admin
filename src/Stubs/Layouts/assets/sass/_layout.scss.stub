@@ -68,7 +68,7 @@ html,body{
     @apply fixed flex-none md:hidden rounded-t-2xl top-0 left-0 right-0 bottom-0 z-20 bg-black opacity-50 cursor-pointer;
 }
 #la-page-menu{
-    @apply flex-none w-[320px] bg-[var(--c800)] z-50 text-[var(--c300)] absolute md:static  top-0 left-0 bottom-0 shadow rounded-l-2xl;
+    @apply flex-none w-[320px] bg-[var(--c800)] z-40 text-[var(--c300)] absolute md:static  top-0 left-0 bottom-0 shadow rounded-l-2xl;
     .logo{
         @apply text-[var(--c50)] font-bold text-lg h-16 text-center line-clamp-1;
         a{
