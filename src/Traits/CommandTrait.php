@@ -80,10 +80,10 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            $status = true;
+            $status = 'true';
             switch ($item->name){
                 case 'created_at':
-                case 'updated_at': $status = false;
+                case 'updated_at': $status = 'false';
             }
             if($item->name !="id"){
                 $rt[$item->name] = '"' . $item->name . '" => ["status" => '.$status.', "label" => "' . $item->label . '"]';
