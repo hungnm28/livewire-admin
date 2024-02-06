@@ -11,13 +11,14 @@ use function Laravel\Prompts\confirm;
 
 trait CommandTrait
 {
-    private $module, $model, $path, $pageName, $fileName,$paths;
+    private $module, $model, $path, $pageName, $fileName, $paths;
     private $reservedColumn = [
         'id', 'created_at', 'updated_at', 'deleted_at'
     ];
     private $ignoreColumn = ['remember_token', 'two_factor_recovery_codes', 'two_factor_secret'];
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->setPaths();
     }
@@ -81,12 +82,13 @@ trait CommandTrait
         $rt = [];
         foreach ($fields as $item) {
             $status = 'true';
-            switch ($item->name){
+            switch ($item->name) {
                 case 'created_at':
-                case 'updated_at': $status = 'false';
+                case 'updated_at':
+                    $status = 'false';
             }
-            if($item->name !="id"){
-                $rt[$item->name] = '"' . $item->name . '" => ["status" => '.$status.', "label" => "' . $item->label . '"]';
+            if ($item->name != "id") {
+                $rt[$item->name] = '"' . $item->name . '" => ["status" => ' . $status . ', "label" => "' . $item->label . '"]';
             }
         }
         return $rt;
@@ -97,7 +99,7 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            if($item->name !="id"){
+            if ($item->name != "id") {
                 $rt[$item->name] = '<x-lf.table.label :$fields name="' . $item->name . '">' . $item->label . '</x-lf.table.label>';
 
             }
@@ -110,7 +112,7 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            if($item->name !="id"){
+            if ($item->name != "id") {
                 switch ($item->type) {
                     case "json":
                         $rt[$item->name] = '<x-lf.table.item :$fields name="' . $item->name . '">JSON FIELD</x-lf.table.item>';
@@ -129,7 +131,7 @@ trait CommandTrait
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $item) {
-            if($item->name !="id") {
+            if ($item->name != "id") {
                 switch ($item->type) {
                     case "json":
                         $rt[$item->name] = '<x-lf.table.item :fields="$this->fields" name="' . $item->name . '">JSON FIELD</x-lf.table.item>';
@@ -164,25 +166,26 @@ trait CommandTrait
         return $rt;
     }
 
-    private function generateForm($page=null)
+    private function generateForm($page = null)
     {
         $fields = $this->getFields();
         $rt = [];
         foreach ($fields as $field => $item) {
             if (!$this->checkReservedField($field)) {
+                $id = $this->randomChars(3, $field);
                 switch ($item->type) {
                     case "text":
                     case "long-text":
-                        $rt[$field] = '<x-lf.form.textarea name="' . $item->name . '" label="' . $item->label . '"  placeholder="' . $item->label . ' ..." id="'.md5($page."-". $item->name).'"/>';
+                        $rt[$field] = '<x-lf.form.textarea name="' . $item->name . '" label="' . $item->label . '"  placeholder="' . $item->label . ' ..." id="' . $id . '"/>';
                         break;
                     case "boolean":
-                        $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '"  label="' . $item->label . '" :checked="$'.$item->name.' == 1"  id="'.md5($page."-". $item->name).'" />';
+                        $rt[$field] = '<x-lf.form.toggle name="' . $item->name . '"  label="' . $item->label . '" :checked="$' . $item->name . ' == 1"  id="' . $id . '" />';
                         break;
                     case "json":
-                        $rt[$field] = '<x-lf.form.json type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" :data="$'.$item->name.'" id="'.md5($page."-". $item->name).'"/>';
+                        $rt[$field] = '<x-lf.form.json type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" :data="$' . $item->name . '" id="' . $id . '"/>';
                         break;
                     default:
-                        $rt[$field] = '<x-lf.form.input type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..." id="'.md5($page."-". $item->name).'" />';
+                        $rt[$field] = '<x-lf.form.input type="' . $item->type . '" name="' . $item->name . '" label="' . $item->label . '" placeholder="' . $item->label . ' ..." id="' . $id . '" />';
                         break;
                 }
             }
@@ -190,6 +193,14 @@ trait CommandTrait
 
         return $rt;
 
+    }
+
+    private function randomChars($number = 1, $pre = '')
+    {
+        if ($pre != "") {
+            return $pre . "-" . substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", $number)), 0, $number);
+        }
+        return substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", $number)), 0, $number);
     }
 
     private function replaceStub($stub)
@@ -215,7 +226,7 @@ trait CommandTrait
         ], [
             $this->getModuleName(),
             $this->getNamespace(),
-            str_replace("/","\\",$this->paths->livewireClass),
+            str_replace("/", "\\", $this->paths->livewireClass),
             $this->getModelName(),
             $this->getModuleSug(),
             $this->getModuleHeadName(),
@@ -265,7 +276,8 @@ trait CommandTrait
     {
         return in_array($name, $this->reservedColumn);
     }
-        private function checkIgnoreField($name)
+
+    private function checkIgnoreField($name)
     {
         return in_array($name, $this->ignoreColumn);
     }
@@ -289,8 +301,9 @@ trait CommandTrait
         return Str::headline($str);
     }
 
-    private function getPageSlug(){
-        $name = Str::afterLast($this->path,".");
+    private function getPageSlug()
+    {
+        $name = Str::afterLast($this->path, ".");
         return $this->getSnakeString($name);
     }
 
@@ -372,7 +385,7 @@ trait CommandTrait
 
     private function getNamespace()
     {
-        $namespace = "Modules/" . $this->module->getName() . "/".$this->paths->livewireClass."/" . $this->path;
+        $namespace = "Modules/" . $this->module->getName() . "/" . $this->paths->livewireClass . "/" . $this->path;
         $namespace = str_replace("/", "\\", $namespace);
         return $namespace;
     }
@@ -384,7 +397,7 @@ trait CommandTrait
 
     private function getClassFile($name)
     {
-        return $this->getModulepath($this->paths->livewireClass."/$this->path/$name");
+        return $this->getModulepath($this->paths->livewireClass . "/$this->path/$name");
     }
 
     private function getViewFile($name)
@@ -394,7 +407,7 @@ trait CommandTrait
             $data[] = $this->getSnakeString($path);
         }
         $path = implode("/", $data);
-        return $this->getModulepath($this->paths->livewireView."/$path/$name");
+        return $this->getModulepath($this->paths->livewireView . "/$path/$name");
     }
 
     private function getModulepath($path = "")
@@ -425,7 +438,7 @@ trait CommandTrait
         return implode(".", $data);
     }
 
-    private function insertDataAfter($path, $flag,$check, $data)
+    private function insertDataAfter($path, $flag, $check, $data)
     {
         if (!file_exists($path)) {
             $this->error("File not exits: $path");
@@ -434,7 +447,7 @@ trait CommandTrait
         $template = file_get_contents($path);
         if (!Str::contains($template, $check)) {
             $template = str_replace($flag,
-                $flag. $data
+                $flag . $data
                 , $template
             );
             return file_put_contents($path, $template);
