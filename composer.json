@@ -6,7 +6,7 @@
         "nwidart/laravel-modules": "^11.0.9",
         "mhmiton/laravel-modules-livewire": "^3.0",
         "laravel/prompts": "^0.1.21",
-        "hungnm28/icon-manager": "dev-main"
+        "hungnm28/icon-manager": "*"
     },
     "license": "MIT",
     "autoload": {
