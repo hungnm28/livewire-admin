@@ -1,6 +1,0 @@
-<x-lf.box.create title="Permissions - Create">
-    <x-lf.form.select  name="parent_id" label="Parent" class="w-1/2" :params="$this->getParents()"/>
-    <x-lf.form.select name="type" label="Type" class="w-1/2" :params="$this->getTypes()"/>
-    <x-lf.form.input type="string" name="name" label="Name" placeholder="Name ..." :datalist="$this->getSuggest()"/>
-	<x-lf.form.input type="string" name="label" label="Label" placeholder="Label ..."/>
-</x-lf.box.create>

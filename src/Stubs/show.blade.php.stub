@@ -1,5 +1,0 @@
-<x-lf.box.show title="DUMP_MY_PAGE_NAME - Show" :$record_id>
-    <table class="table">
-        DUMP_MY_SHOW_FIELDS
-    </table>
-</x-lf.box.show>

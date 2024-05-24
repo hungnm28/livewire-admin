@@ -1,6 +1,0 @@
-<x-lf.box.edit title="Roles - Edit">
-    <x-lf.form.input type="string" name="name" label="Name" placeholder="Name ..."/>
-    <x-lf.form.field name="permissions" label="Permissions">
-        {!! $this->showPermissionForm(0) !!}
-    </x-lf.form.field>
-</x-lf.box.edit>
