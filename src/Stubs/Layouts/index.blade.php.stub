@@ -1,0 +1,5 @@
+<x-DUMP_MY_MODULE_SLUG::layout-master>
+    <x-lf.page title="DUMP_MY_MODULE_HEAD_NAME">
+        <h1 class="text-3xl text-center p-2 text-[var(--c500)]">Welcome to DUMP_MY_MODULE_HEAD_NAME Page</h1>
+    </x-lf.page>
+</x-DUMP_MY_MODULE_SLUG::layout-master>

@@ -1,0 +1,24 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE;
+
+use App\Models\DUMP_MY_MODEL_NAME;
+use Livewire\Component;
+
+class Show extends Component
+{
+    use FormTrait;
+
+    public function mount(){
+        $this->authorize("DUMP_MY_DOT_PAGE");
+    }
+    public function render()
+    {
+        if($this->record_id <=0){
+        return '<div>EMPTY</div>';
+        }
+        $data = DUMP_MY_MODEL_NAME::findOrFail($this->record_id);
+        return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.show', compact("data"))
+            ->layout("DUMP_MY_MODULE_SLUG::layouts.master", ['title' => "DUMP_MY_PAGE_NAME"]);
+    }
+}

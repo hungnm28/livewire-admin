@@ -1,0 +1,69 @@
+.table{
+    @apply w-full table-auto border-collapse border  bg-white text-sm text-gray-800 ;
+    th,td{
+        @apply p-2 border-y text-left ;
+    }
+    th{
+        @apply text-gray-600 text-xs;
+        &.stt,&.action{
+            @apply w-0 border whitespace-nowrap;
+        }
+    }
+    tr{
+        @apply hover:bg-[var(--c100)];
+        &:nth-child(odd){
+            @apply bg-slate-50 hover:bg-[var(--c100)];
+        }
+    }
+    .tree-box{
+        @apply w-0 p-0 px-2 whitespace-nowrap h-0 border-none bg-white border-r ;
+
+        .tree-content{
+            @apply w-full h-full flex  items-center;
+        }
+        .tree{
+            @apply flex-none h-full flex;
+        }
+        .h{
+            @apply flex-auto h-0 border-t border-sky-500 flex items-center  border-dashed -mt-px relative min-w-[5px];
+            &:after{
+                content: "";
+                @apply block absolute  border-transparent border-l-sky-500 border-[4px] border-l-[9px] -top-[5px] -right-2  ;
+            }
+        }
+        .v,.s{
+            @apply h-full inline-block w-2 border-sky-500 border-r;
+            &.v-0{
+                @apply border-none;
+            }
+
+        }
+        .s{
+            @apply border-none ;
+        }
+        .node{
+            @apply w-2 h-1/2 border-l border-b border-sky-500 relative -ml-px;
+        }
+        .node-parent{
+            @apply w-0 h-1/2 inline-block relative ;
+            &:after{
+                content: "";
+                @apply h-full block w-0 border-l border-sky-500 absolute top-[100%];
+            }
+            &.lv-1{
+                @apply -ml-px ;
+            }
+            &:before{
+                content: "";
+                @apply ring-1 absolute -bottom-px -right-[2px] w-1 h-1 block z-10 ring-sky-500 bg-sky-50 ;
+            }
+            .root{
+                @apply block absolute w-2 h-2 border-l border-b top-[100%] -mt-2 border-sky-500 -left-2;
+            }
+        }
+
+    }
+    .action{
+        @apply border whitespace-nowrap text-right;
+    }
+}

@@ -1,0 +1,12 @@
+.delete-confirm{
+    @apply w-full block p-2;
+    .mcon{
+        @apply w-10 h-10 text-orange-600;
+    }
+    .label{
+        @apply font-medium text-3xl flex w-full text-center text-slate-500 items-center justify-center;
+    }
+    .note{
+        @apply w-full block text-center text-gray-500 py-2;
+    }
+}

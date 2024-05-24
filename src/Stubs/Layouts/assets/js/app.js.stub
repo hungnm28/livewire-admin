@@ -1,0 +1,26 @@
+window.toggleFullScreen = function (opt) {
+    if ((document.fullScreenElement && document.fullScreenElement !== null) || // alternative standard method
+        (!document.mozFullScreen && !document.webkitIsFullScreen)) { // current working methods
+        if (document.documentElement.requestFullScreen) {
+            document.documentElement.requestFullScreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullScreen) {
+            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+        opt.innerHTML = '<svg  viewBox="0 0 24 24" class="mcon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+            '<use xlink:href="/assets/images/icons.svg#fullscreen-close"></use>\n' +
+            '</svg>';
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+        opt.innerHTML = '<svg  viewBox="0 0 24 24" class="mcon" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+            '<use xlink:href="/assets/images/icons.svg#fullscreen"></use>\n' +
+            '</svg>';
+    }
+}

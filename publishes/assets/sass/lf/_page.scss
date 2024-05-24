@@ -1,0 +1,10 @@
+.page{
+    @apply w-full min-h-screen flex flex-col;
+    .page-content{
+        @apply w-full flex-auto;
+    }
+    .page-footer{
+        @apply w-full flex items-center justify-between p-4 border-t bg-slate-100 flex-none;
+    }
+
+}

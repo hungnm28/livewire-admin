@@ -1,0 +1,30 @@
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+DUMP_MY_MODEL_CAST_CLASSES
+
+class DUMP_MY_MODEL_NAME extends Model
+{
+    use HasFactory;
+
+    protected $table = 'DUMP_MY_MODEL_TABLE';
+
+    protected $fillable = DUMP_MY_MODEL_FIELDS;
+
+    public static $listFields = DUMP_MY_MODEL_LIST_FIELDS;
+
+    public function getListFields()
+    {
+        return self::$listFields;
+    }
+
+    DUMP_MY_MODEL_RELATIONSHIP
+    protected function casts(): array
+    {
+        return [
+             DUMP_MY_MODEL_CASTS
+        ];
+    }
+}

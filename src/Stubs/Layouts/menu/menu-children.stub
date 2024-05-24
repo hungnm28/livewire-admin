@@ -1,0 +1,10 @@
+        @if(Route::has("DUMP_MY_ROUTE"))
+            @can("DUMP_MY_ROUTE")
+                <li class="child {{ request()->routeIs('DUMP_MY_ROUTE') ? 'active' : '' }}">
+                    <a class="child-link" href="{{route('DUMP_MY_ROUTE')}}">
+                        <span class="icon">{!! mIcon('DUMP_MY_ICON') !!}</span>
+                        <span class="title">DUMP_MY_LABEL</span>
+                    </a>
+                </li>
+            @endcan
+        @endif

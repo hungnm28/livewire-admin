@@ -1,0 +1,6 @@
+Route::prefix("DUMP_MY_VIEW_FOLDER")->name(".DUMP_MY_DOT_PAGE")->group(function (){
+    Route::get('/', Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE\Index::class);
+    Route::get('/create',Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE\Create::class)->name(".DUMP_MY_DOT_PAGE.create");
+    Route::get('/edit', Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE\Edit::class)->name(".DUMP_MY_DOT_PAGE.edit");
+    Route::get('/show', Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE\Show::class)->name(".DUMP_MY_DOT_PAGE.show");
+});

@@ -1,0 +1,30 @@
+.box-modal{
+    @apply fixed inset-0 overflow-y-auto px-4 py-6  z-50;
+    .modal-overlay{
+        @apply fixed inset-0 transform transition-all;
+        .overlay{
+            @apply absolute inset-0 bg-gray-500 opacity-75;
+        }
+    }
+    .modal-container{
+        @apply mb-6 bg-white rounded overflow-hidden shadow-xl transform transition-all   sm:mx-auto;
+    }
+    .footer{
+        @apply  flex flex-row justify-end px-6 py-4 bg-gray-100 text-right space-x-4;
+    }
+    .header{
+        @apply w-full flex py-4;
+        .icon{
+            @apply w-16 flex-none flex justify-center;
+            .mcon{
+                @apply w-12 h-12;
+            }
+        }
+        .title{
+            @apply w-full flex-none px-2 flex items-center text-xl font-medium;
+        }
+        &.warning{
+            @apply text-orange-600 bg-orange-100;
+        }
+    }
+}

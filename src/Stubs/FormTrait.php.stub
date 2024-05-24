@@ -1,0 +1,36 @@
+<?php
+
+namespace Modules\DUMP_MY_MODULE_NAME\Livewire\DUMP_MY_NAMESPACE;
+
+use App\Models\DUMP_MY_MODEL_NAME;
+use App\Traits\WithFormTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+trait FormTrait
+{
+   use WithFormTrait;
+   use AuthorizesRequests;
+
+    public DUMP_MY_VARIABLES;
+
+    protected function rules()
+    {
+        $rules = [
+            DUMP_MY_RULES
+        ];
+        return $rules;
+    }
+    private function setFields()
+    {
+        $data = DUMP_MY_MODEL_NAME::find($this->record_id);
+        DUMP_MY_SET_FIELDS
+    }
+
+    private function getFieldDatas()
+    {
+        $data = [
+            DUMP_MY_SET_DATA
+        ];
+        return $data;
+    }
+}
