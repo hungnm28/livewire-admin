@@ -16,6 +16,9 @@ class AuthCommand extends Command
     {
         $this->alert("Generate Auth");
         $this->init();
+        $this->call("vendor:publish",[
+            "--tag"=>"livewire-admin"
+        ]);
         $this->createPermission();
         $this->createMiddleware();
     }
