@@ -15,14 +15,14 @@ class PageCommand extends Command
     public function handle()
     {
         $this->init();
-//        $this->createClass("FormTrait.php");
-//        $this->createView("create.blade.php");
-//        $this->createView("edit.blade.php");
-//        $this->createView("show.blade.php");
-//        $this->createView("index.blade.php");
- //       $this->createClass("Show.php");
- //       $this->createClass("Edit.php");
- //       $this->createClass("Create.php");
+        $this->createClass("FormTrait.php");
+        $this->createView("create.blade.php");
+        $this->createView("edit.blade.php");
+        $this->createView("show.blade.php");
+        $this->createView("index.blade.php");
+        $this->createClass("Show.php");
+        $this->createClass("Edit.php");
+        $this->createClass("Create.php");
         $this->createClass("Index.php");
     }
 
