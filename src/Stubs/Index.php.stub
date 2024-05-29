@@ -33,7 +33,7 @@ class Index extends Component
         if ($this->fId > 0) {
             $data = $data->whereId($this->fId);
         }
-        $data = $data->orderByDESC("id")->paginate(30);
+        $data = $data->paginate(30);
 
         return view('DUMP_MY_MODULE_SLUG::livewire.DUMP_MY_DOT_PAGE.index',compact("data"))
             ->layout('DUMP_MY_MODULE_SLUG::layouts.master',['title'=>"DUMP_MY_PAGE_NAME"]);
