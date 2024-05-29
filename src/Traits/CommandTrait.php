@@ -295,7 +295,7 @@ trait CommandTrait
         $return = [];
         foreach ($fields as $k => $item) {
             $return[$k] = "$$k";
-            if ($item["default"]) {
+            if ($item["default"] != null) {
                 $return[$k] = "$$k = " . $item["default"];
             }
         }
