@@ -101,7 +101,7 @@ class ModelSupport
                     $column["default"] = '[]';
                     break;
                 default:
-                    if ($column["default"] != null) {
+                    if ($column["default"] !== null) {
                         $column["default"] = "'".trim($column["default"],"\n\r\t\v\0\"'")."'";
                     }
             }
