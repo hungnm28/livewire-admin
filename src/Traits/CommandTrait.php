@@ -341,7 +341,9 @@ trait CommandTrait
     {
         $return = [];
         foreach($fields as $name =>$item){
-            $return[$name] = '<x-lf.table.item :$fields name="' . $name . '">{{$item->' . $name . '}}</x-lf.table.item>';
+            if($name !="id"){
+                $return[$name] = '<x-lf.table.item :$fields name="' . $name . '">{{$item->' . $name . '}}</x-lf.table.item>';
+            }
         }
         return $return;
 
@@ -351,7 +353,9 @@ trait CommandTrait
     {
         $return = [];
         foreach($fields as $name =>$item){
-            $return[$name] = '<x-lf.table.label :$fields name="' . $name . '">' . $this->getHeadline($name) . '</x-lf.table.label>';
+            if($name != "id"){
+                $return[$name] = '<x-lf.table.label :$fields name="' . $name . '">' . $this->getHeadline($name) . '</x-lf.table.label>';
+            }
         }
         return $return;
     }
@@ -407,7 +411,9 @@ trait CommandTrait
     {
         $return = [];
         foreach($fields as $name =>$item){
-            $return[$name] = "'$name' => ['status' => ". $this->getBooleanText(!data_get($item,"hidden")).", 'label' => '" . $this->getHeadline($name) . "']";
+            if($name !="id"){
+                $return[$name] = "'$name' => ['status' => ". $this->getBooleanText(!data_get($item,"hidden")).", 'label' => '" . $this->getHeadline($name) . "']";
+            }
         }
         return $return;
     }

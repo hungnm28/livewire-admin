@@ -101,7 +101,8 @@ class ModelSupport
                     break;
                 default:
                     if ($column["default"]) {
-                        $column["default"] = (string)$column["default"];
+                        $column["default"] = "'".trim($column["default"],"\n\r\t\v\0\"'")."'";
+
                     }
             }
             $data[$name] = $column;
