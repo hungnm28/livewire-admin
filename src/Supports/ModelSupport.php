@@ -93,6 +93,7 @@ class ModelSupport
                 case "integer":
                 case "boolean":
                 case "bigint":
+                case "int":
                     $column["default"] = intval($column["default"]);
                     break;
                 case "json":
@@ -100,9 +101,8 @@ class ModelSupport
                     $column["default"] = '[]';
                     break;
                 default:
-                    if ($column["default"]) {
+                    if ($column["default"] != null) {
                         $column["default"] = "'".trim($column["default"],"\n\r\t\v\0\"'")."'";
-
                     }
             }
             $data[$name] = $column;
