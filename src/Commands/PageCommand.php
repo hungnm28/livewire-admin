@@ -24,6 +24,11 @@ class PageCommand extends Command
         $this->createClass("Edit.php");
         $this->createClass("Create.php");
         $this->createClass("Index.php");
+        $this->call("la:route",[
+           'module'=>$this->argument("module")
+           ,'folder'=>$this->argument("folder")
+            ,'--model'=>$this->option('model')
+        ]);
     }
 
     private function createClass($name)

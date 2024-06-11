@@ -3,7 +3,7 @@
     <div class="checkboxs">
         @foreach($params as $val => $title)
             <label class="item">
-                <input type="radio" class="form-radio" name="{{$name}}[]" wire:model="{{$name}}" value="{{$val}}" />
+                <input type="radio" class="form-radio" name="{{$name}}[]" wire:model.live="{{$name}}" value="{{$val}}" />
                 <span class="label">{{$title}}</span>
             </label>
         @endforeach

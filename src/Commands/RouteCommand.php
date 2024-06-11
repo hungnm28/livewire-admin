@@ -36,6 +36,7 @@ class RouteCommand extends Command
         $route = $this->getTemplate('route.php.stub');
 
         file_put_contents($pathSave,$route,FILE_APPEND);
+        $this->info('Route had created!');
         return true;
     }
 }
