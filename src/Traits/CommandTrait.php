@@ -374,7 +374,7 @@ trait CommandTrait
                     break;
                 case "boolean":
                 case "tinyint":
-                    $return[$name] = '<x-lf.form.toggle name="' . $type . '"  label="' . $this->getHeadline($name) . '" :checked="$' . $name . ' == 1"  id="' . $id . '" />';
+                    $return[$name] = '<x-lf.form.toggle name="' . $name . '"  label="' . $this->getHeadline($name) . '" :checked="$' . $name . ' == 1"  id="' . $id . '" />';
                     break;
                 case "json":
                     $return[$name] = '<x-lf.form.json name="' . $name . '" label="' . $this->getHeadline($name) . '" :data="$' . $name . '" id="' . $id . '"/>';
@@ -387,10 +387,10 @@ trait CommandTrait
                 case "smallint":
                 case "bigint":
                 case "double":
-                    $return[$name] = '<x-lf.form.input type="number" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
+                    $return[$name] = '<x-lf.form.input name="' . $name . '" type="number" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
                     break;
                 default:
-                    $return[$name] = '<x-lf.form.input type="' . $type . '" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
+                    $return[$name] = '<x-lf.form.input name="' . $name . '" type="' . $type . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
                     break;
             }
         }
