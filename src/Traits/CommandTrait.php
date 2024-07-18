@@ -201,13 +201,13 @@ trait CommandTrait
         return str_replace([
             "DUMP_MY_NAMESPACE"
             , "DUMP_MY_PAGE_NAME"
-            ,"DUMP_MY_DOT_PAGE"
-            ,"DUMP_MY_VIEW_FOLDER"
+            , "DUMP_MY_DOT_PAGE"
+            , "DUMP_MY_VIEW_FOLDER"
         ], [
             $this->getNamespace()
             , $this->getHeadLine($this->folder)
-            ,$this->getDotFolder()
-            ,$this->viewFolder()
+            , $this->getDotFolder()
+            , $this->viewFolder()
         ], $stub);
     }
 
@@ -340,8 +340,8 @@ trait CommandTrait
     private function generateTableItems($fields)
     {
         $return = [];
-        foreach($fields as $name =>$item){
-            if($name !="id"){
+        foreach ($fields as $name => $item) {
+            if ($name != "id") {
                 $return[$name] = '<x-lf.table.item :$fields name="' . $name . '">{{$item->' . $name . '}}</x-lf.table.item>';
             }
         }
@@ -352,8 +352,8 @@ trait CommandTrait
     private function generateTableLabels($fields)
     {
         $return = [];
-        foreach($fields as $name =>$item){
-            if($name != "id"){
+        foreach ($fields as $name => $item) {
+            if ($name != "id") {
                 $return[$name] = '<x-lf.table.label :$fields name="' . $name . '">' . $this->getHeadline($name) . '</x-lf.table.label>';
             }
         }
@@ -373,10 +373,21 @@ trait CommandTrait
                     $return[$name] = '<x-lf.form.textarea name="' . $name . '" label="' . $this->getHeadline($name) . '"  placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '"/>';
                     break;
                 case "boolean":
+                case "tinyint":
                     $return[$name] = '<x-lf.form.toggle name="' . $type . '"  label="' . $this->getHeadline($name) . '" :checked="$' . $name . ' == 1"  id="' . $id . '" />';
                     break;
                 case "json":
-                    $return[$name] = '<x-lf.form.json name="' . $type . '" label="' . $this->getHeadline($name) . '" :data="$' . $name . '" id="' . $id . '"/>';
+                    $return[$name] = '<x-lf.form.json name="' . $name . '" label="' . $this->getHeadline($name) . '" :data="$' . $name . '" id="' . $id . '"/>';
+                    break;
+                case "varchar":
+                case "string":
+                    $return[$name] = '<x-lf.form.input " name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
+                    break;
+                case "int":
+                case "smallint":
+                case "bigint":
+                case "double":
+                    $return[$name] = '<x-lf.form.input " type="number" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
                     break;
                 default:
                     $return[$name] = '<x-lf.form.input type="' . $type . '" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
@@ -410,16 +421,17 @@ trait CommandTrait
     private function generateArrFields($fields)
     {
         $return = [];
-        foreach($fields as $name =>$item){
-            if($name !="id"){
-                $return[$name] = "'$name' => ['status' => ". $this->getBooleanText(!data_get($item,"hidden")).", 'label' => '" . $this->getHeadline($name) . "']";
+        foreach ($fields as $name => $item) {
+            if ($name != "id") {
+                $return[$name] = "'$name' => ['status' => " . $this->getBooleanText(!data_get($item, "hidden")) . ", 'label' => '" . $this->getHeadline($name) . "']";
             }
         }
         return $return;
     }
+
     private function getBooleanText($number)
     {
-        return $number?'true':'false';
+        return $number ? 'true' : 'false';
     }
 
     private function moduleView($path)
@@ -513,10 +525,12 @@ trait CommandTrait
         return config("modules.paths.generator.assets.path", "resources/assets");
 
     }
+
     private function getModulepath($path = "")
     {
         return $this->module->getPath() . "/$path";
     }
+
     private function assetsPath($path)
     {
         if (!$this->module) {
