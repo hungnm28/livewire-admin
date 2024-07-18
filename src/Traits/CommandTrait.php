@@ -403,6 +403,10 @@ trait CommandTrait
         $return = [];
         foreach ($fields as $k => $item) {
             $return[$k] = "\$this->$k = data_get(\$data,'$k');";
+            if ($item["default"] !== null) {
+                $default = $item["default"];
+                $return[$k] = "\$this->$k = data_get(\$data,'$k',$default);";
+            }
         }
         return $return;
 
