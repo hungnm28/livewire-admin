@@ -381,13 +381,13 @@ trait CommandTrait
                     break;
                 case "varchar":
                 case "string":
-                    $return[$name] = '<x-lf.form.input " name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
+                    $return[$name] = '<x-lf.form.input name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
                     break;
                 case "int":
                 case "smallint":
                 case "bigint":
                 case "double":
-                    $return[$name] = '<x-lf.form.input " type="number" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
+                    $return[$name] = '<x-lf.form.input type="number" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
                     break;
                 default:
                     $return[$name] = '<x-lf.form.input type="' . $type . '" name="' . $name . '" class="md:w-1/2" label="' . $this->getHeadline($name) . '" placeholder="' . $this->getHeadline($name) . ' ..." id="' . $id . '" />';
